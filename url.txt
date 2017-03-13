@@ -1,3 +1,6 @@
+http://postd.cc/git-and-some-back-story/
+http://postd.cc/neural-network-zoo-latter/
+http://postd.cc/what-programming-languages-weekends/
 http://postd.cc/the-jvm-is-not-that-heavy/
 http://postd.cc/neural-network-zoo/
 http://postd.cc/object-ownership/
@@ -7,6 +10,3 @@ http://postd.cc/how_do_type_classes_differ_from_interfaces/
 http://postd.cc/how-quickly-can-you-remove-spaces-from-a-string/
 http://postd.cc/how-to-find-node-js-performance-optimization-killers/
 http://postd.cc/numerical-optimization/
-http://postd.cc/threadtone/
-http://postd.cc/awesome-bits/
-http://postd.cc/the-idea-of-lisp/
