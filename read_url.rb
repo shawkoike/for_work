@@ -17,6 +17,6 @@ urls.each do |url|
   html = Nokogiri::HTML(open(URI.encode(url)))
   title = html.css('.block-entry-title')
   title =  title.children
-  File.open("./text/#{title}.txt","w")
+  File.open("./data/#{title}.txt","w")
   # dummy = html.css('.markdown-content > p')
 end
