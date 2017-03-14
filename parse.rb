@@ -14,7 +14,7 @@ titles.each do |title|
     end
     file.close
   end
-  File.open("./data/#{title}_parsed.txt",'w+') do |f|
+  File.open("./data/#{title}_content.txt",'w+') do |f|
     f.puts(text)
   end
   text = ""
