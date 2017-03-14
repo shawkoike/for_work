@@ -1,0 +1,99 @@
+<p><a href="http://joelcalifa.com/blog/patronizing-passwords/" rel="nofollow" title="" class="ext-link">Patronizing Passwords</a> （2015-11-20） by <a href="https://twitter.com/notdetails" rel="nofollow" title="" class="ext-link">Joel Califa</a></p><p>誰もが経験するあの瞬間。新しいサービスに登録し、パスワードを選んで入力する。でも、入れません。選んだパスワードは十分安全なはずなのに、使いたいサービスが独善的にそれを拒むのです。</p><p class="pswd">記号、数字、大文字、小文字を少なくとも１つずつ使用しなければなりません。</p><p>小文字の長いパスワードの方がドルマークだらけの短いパスワードより安全だということを証明する、<a href="http://xkcd.com/936/" rel="nofollow" title="" class="ext-link">XKCDの有名なコミック</a>のことは忘れましょう。まず、あなたの主力パスワードが<code>$$ICECREAM$$</code>だとします。アイスクリームは、恐ろしい人生の希望の灯火とも呼べるほどの大好物なので簡単に思い出せます。そして、このパスワードにはブートのための特殊文字が入っています。</p><p>残念なことに、<code>$$ICECREAM$$</code>には小文字と数字がないので、客観的に見れば安全ではありません。そこで、このサービスのためのパスワードを<code>$$IceCream100$$</code>にしました。どのみち、このパスワードの方が安全なので、あなたは、これを新しい主力パスワードにしようと決めます。申し分のない1日ではないけれど、全体的には満足な日です。</p><p class="pswd">パスワードに特殊文字は使用できません</p><p>さて、<code>$$IceCream100$$</code>は、しばらくの間は問題なく使えていましたが、6つの製品に使った後で、これが使えないものに遭遇しました。独善的なサービスです。そういうサービスはパスワードを拒絶することが多いのです。特殊文字を嫌い、数字を必要とすることもあるし、数字を嫌って特殊文字を要求することもあります。図を見てください。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/nospecial.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/nospecial.png" alt="nospecial" width="643" height="196" class="alignnone size-full wp-image-5510"></a><br>
+<em>注釈：<br>
+Username：ユーザ名<br>
+Must be at least eight…：英字と数字をそれぞれ1つ以上含み、特殊文字を含まない8桁以上で指定してください。<br>
+available：利用できます<br>
+Confirm Password：パスワード確認<br>
+Password Strength：パスワード強度<br>
+Strong：強<br>
+Email：Eメールアドレス<br>
+Confirm Email：Eメールアドレス確認<br>
+</em></p><p>プロのアドバイス：制約を加えて可能な組み合わせを減らすとパスワードが簡単に解読されるようになります。</p><p>では、この要求の細かいサービスのためにだけ、ドルマークを外して、代わりに<code>IceCream100</code>を使うことにしましょう。古き良き時代に逆戻りです。問題は、次回ログインしようとしたときに、このシステムのパスワードポリシーが頑固だということをシステムが思い出させてくれないことです。あなたは、いつものパスワードを入力します。入れません。過去に使ったことのある他の組み合わせをいくつか試してみます。それでもだめです。またパスワードリセットのリンクボタンを使うときが来たのです。こうなったら、このボタンが基本的にあなたにとってのログインボタンなのです。</p><p>サービスは次に、数字を使ってはいけないと念を押してきます。私ならここで、怒りで左目がピクピクし始めるところです。喜ばしいことに、あなたの脳は以前と同じ思考回路をたどって以前のパスワードを思い出します。もう一度それを使ってもいいかも。再び<code>IceCream100</code>とタイプして、送信ボタンをクリックします。</p><p class="pswd">以前に使用したパスワードは使用できません</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/tableflip.gif"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/tableflip.gif" alt="tableflip" width="500" height="281" class="alignnone size-full wp-image-5511"></a><br>
+なんだって？　言葉も出ません。現実なのか？　こんなことが起こり得るのか？　まるで、あなたが国中のトイレの個室に行き当たりばったりに以前のパスワードを落書きして回っているとサービスの裏側の人たちが想像しているみたいです。そのうちの1人が信念を持ってこう言います。「解決策があります。私たちの登録システムに、とんでもない規則を追加しましょう。」</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/noprevious.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/noprevious.png" alt="noprevious" width="406" height="239" class="alignnone size-full wp-image-5512"></a><br>
+<em>注釈：<br>
+Reset your password：パスワードのリセット<br>
+You have requested…：パスワードのリセットを受け付けました。<br>
+Password is not…：パスワードが拒否されました。Adobe IDに独自の新しいパスワードを使用してください。<br>
+Your new password…：新しいパスワードは6桁以上を指定してください。<br>
+</em></p><p>でも、実際にこんなことをする会社はありませんよね？</p><p>こういうわけで、<code>IceCream100</code>は、もう使えません。うんざりです。自分のいつものパスワードから全くかけ離れた組み合わせを使わなければなりません。さて、この、1つのサイトのパスワードは、少なくとも忘れてしまうまでの間は<code>iceCREAM100</code>になりましたが、次のログインのときは、きっとこのパスワードを試すことはないでしょう。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/passwordreq.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/passwordreq.png" alt="passwordreq" width="640" height="314" class="alignnone size-full wp-image-5521"></a><br>
+<em>訳：<br>
+ヘルプ：パスワード規則一覧<br>
+1. パスワードは正確に8桁であること。<br>
+2. 英字、数字、特殊文字を少なくとも1つずつ含むこと。<br>
+3. 特殊文字は次のもののみ使用可能：@ # $<br>
+4. 特殊文字は先頭または末尾にあってはならない。<br>
+5. 隣り合う2つの同じ文字は「セット」と見なされる。「セット」は使用不可。<br>
+6. 自分の名前、ユーザID、会社名または雇用主などの名前は使用しないこと。<br>
+7. その他の使用できない単語は、Texas、childおよび、月の名前（January～December）である。<br>
+8. 新パスワードは旧パスワードに酷似してはならない。<br>
+　　a. 例：旧パスワード－abc#1234、使用可能な新パスワード－acb$1243<br>
+　　b. 1文字目、2文字目および3文字目は同一文字であってはならない。（abc****）<br>
+　　c. 2文字目、3文字目および4文字目は同一文字であってはならない。（*bc#***）<br>
+　　d. 6文字目、7文字目および8文字目は同一文字であってはならない。(*****234)<br>
+9. パスワードは15日に1回、自発的に（ヘルプデスクの援助なしで）変更することができる。必要な場合は、ヘルプデスクはいつでもパスワードをリセットすることができる。<br>
+10. 直前の8つのパスワードは再利用できない。</em></p><p>ページの先頭へ戻る<br>
+</p><p>パスワード地獄です。これは<a href="http://kottke.org/12/06/the-worlds-worst-password-requirements-list" rel="nofollow" title="" class="ext-link">世界で最悪のパスワード条件リスト（The Attorney General of Texas Child Supportのご厚意により転載）</a>です。</p><p>ここでは、行く手を阻むパスワード規則の簡単な例を見ただけですが、あなたはすでに、頻繁に訪問する数多くの異なるサイトに<code>$$ICECREAM$$</code>、<code>$$IceCream100$$</code>、<code>IceCream100</code>、<code>iceCREAM100</code>のどれかを使っていて、2日に1回はどれを使ったのか忘れてしまいます。開発者たちが、善かれと思って、それが役立つと考えているからというだけの理由で。</p><p>技術系ではない人々がパスワードの扱いをどうしているか分かりますか？　付箋に書いているんです。</p><p>私が大学生のころ、どの課程でも先生たちは最初に基本原則を繰り返すように命じられていました。授業中にラップトップを開かないこと（授業以外のことに集中できなくなるように）、授業を4回以上欠席しないこと（欠席しすぎないように）、盗用しないこと（証拠がないから）、カンニングしないこと、遅刻しないこと、などなど。</p><p>こうした規則の絶え間ない繰り返しは、学生は自分たちの教育について個人責任を負っていないという基本思想に基づくものでした。放っておけば、彼らは確実に落第するのだ。新学期は毎回、この学校の、常に学生は子供扱いされるという文脈に沿った素っ気ないリマインダーで始まるのでした。</p><p>同じような思想が、オンラインパスワードセキュリティの根底にあります。ユーザは個人アカウントのセキュリティに責任を負わない。アプリケーションが責任を肩代わりしなければならない。多くのアプリケーションが現状に固執し、ユーザを子供扱いして、安易な手段をとっています。</p><p>「でもジョエル」と、あなたは画面に向かって抗議の叫びをあげているかもしれません。「複数のサービスに単一のパスワードを使うなんて恐ろしい考えだ。どれかのサービスがウィルス感染したらどうするんだ？」　そして、<a href="http://xkcd.com/792/" rel="nofollow" title="" class="ext-link">それは正論です</a>。</p><p>銀行に使っているのと同じEメールアドレスとパスワードの組み合わせで新生スタートアップ製の新しいアプリに登録すれば、解読されるリスクがあります。出会い系アプリの新しいアカウントばかりではなく、お金を預けている場所もまた、危険にさらされることになるのです。そこのセキュリティがどれだけ優れていても。</p><p>もちろん、愚かなことではありますが、そのことが重要なのではありません。重要なのは、それが本人の決断だということです。おそらく本人にとって、1つのEメールアドレスとパスワードの組み合わせは、自分のアカウントが乗っ取られるリスクを冒してでも使いたいほど便利なのです。</p><p>ユーザには、自分の損得をはかりにかける権利があります。1PasswordやLastPassなどのパスワード管理ツールに頼ることになってもいいから、覚えにくい強力なパスワードを選ぶべきか？　いつでも電話を手元に置いておく必要があってもいいから、2要素認証に切り換えるべきか？</p><p>私は子供では<em>ない</em>ので、こういったサービスに子供扱いされて不便さを強制されるのは不快です。こういうことを、悪いユーザエクスペリエンスと呼ぶのです。</p><p>はっきりと反論させていただくなら、パスワードセキュリティについての記事を楽しんで書いている人々は一般のユーザとは全く違う、ということです。ましてや、一般市民とは比べものになりません。逆に、おばあちゃん（不幸にも、テクニカルな知識のないユーザの代名詞になってしまいました）は、守られなければなりません。おばあちゃんは、”password”が悪いパスワードだということを知っているとは限りません。</p><p>これが真実です。教育を受けていないユーザは、悪いパスワードのもたらす結果も、良いパスワードの成功事例も理解できないかも知れません。でも、これを解決する方法は、他にもあります。</p><p>では、設計者や開発者として、やるべきことは何でしょう？　アプリケーションの登録プロセスを開発しているとしましょう。ユーザを思いやれば、アカウントが乗っ取られるような恐ろしい経験をさせたくありません。ユーザが愚かなことをしないようにするには、どうすればいいでしょうか。</p><p>真実は、あなたにはそれを阻止することはできない、という酷なものです。パスワードは、総当たり攻撃、フィッシング詐欺、推測、それに古典的な（そして最も危険な）盗み見に遭いやすいのです。考えられる限りで最も複雑なパスワードを使うように強制したとしても、ユーザはそれを付箋に書いてモニタに貼り付けるだけでしょう。パスワードを覚えにくくすればするほど、こういう事態に陥る可能性が高くなります。</p><p>繰り返しますが、複雑さの層を重ねることは必ずしもユーザの助けにならないばかりか、あなたのサービスを使う彼らのユーザエクスペリエンスを<em>間違いなく</em>傷つけるのです。</p><p>あなたが開発者なら、バックエンドを保護することに尽力しましょう。パスワードをハッシュしてソルトし、データベースをセキュアに維持し、スロットリングを実装し、ジオロケーションの変化をチェックし、アプリケーションで2要素認証が使えるようにする各種機構を提供し、強固なパスワード修復システムを確保しましょう。パスワードの決定はユーザに任せましょう。</p><p>結局はユーザはシステムのセキュリティの単なる弱点以上のものであるということを忘れてはなりません。<strong>サービスはユーザの<em>ために</em>存在するのであって、ユーザをよそにして存在するのではありません。</strong>ユーザの手を煩わせることなく、また、私たちの製品を使うユーザエクスペリエンスに悪影響を与えずに、人々が強力なパスワードを使えるようになる方法があると思います。そのような方法を探ってみましょう。</p><p>2要素認証システムをセットアップする際には、ユーザの持っているシステムと確実に統合するように注意を払いましょう。ユーザのほとんどがGoogle Authenticatorを持っているとは期待できません。そうではなく、どのように認証したいのか、つまりEメールか、携帯メールか、Duoか、伝書鳩か、ユーザに方法を選ばせるのです。ユーザが手軽にセキュリティを確保できるようにして、その後ユーザが理解できる方法でメッセージを送ります。</p><p>アプリの新規ユーザがサービスに慣れる過程で、つまり、登録中かアプリを使用して数日たってから、パスワードを変更するように勧めるのです。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/twofactormodal.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/twofactormodal.png" alt="twofactormodal" width="602" height="376" class="alignnone size-full wp-image-5513"></a><br>
+<em>注釈：<br>
+Hey,want to…アカウントのセキュリティを高めたいですか？<br>
+If some getshold…誰かがあなたのパスワードを入手したら、あなたのアカウントを盗むことができます。<br>
+あなたの電話番号を追加することで、私たちはそれを食い止めることができます！<br>
+Mobile phone #…モバイル電話番号<br>
+Learn more…詳しい内容を知る<br>
+Make my account bulletproof!…アカウントを防弾仕様に！<br>
+</em></p><p>ユーザが2要素認証の有効性を理解しやすいようにするのです。ユーザが分かる言葉で話しかけます。もし、あまりに使いにくい時は、簡単にやめられるようにします。</p><p>Slackのログインプロセスは、ユーザが理由を理解できるような言葉を使った認証の枠組みの素晴らしい例です。Slackでは”Magic Link”というものを呼び出すことで、ログインプロセスを取り除いています。厳密に言うとこのシステムは”2要素”ではありませんが、ユーザはパスワードかMagic Linkのどちらかを利用することができます。これはセキュリティが低下するという点で議論の余地があるかもしれませんが、2要素認証のような”技術的”なものを、ユーザフレンドリーな方法にどのように再構成できるかを示す優れた例です。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/slackmagic.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/slackmagic.png" alt="slackmagic" width="1000" height="580" class="alignnone size-full wp-image-5514"></a><br>
+<em>注釈：<br>
+（左枠）<br>
+Sign In…ログイン<br>
+Passwprd long? Hard to tipe? …パスワードが長くて入力が難しいですか？<br>
+Get a magic link…Eメールに送られるマジックリンクから簡単にログインできます！<br>
+Send Magic Link…Magic Linkを送る<br>
+Type password instead…パスワードを入力する</em></p><p>（中央枠）<br>
+Sign in on your…モバイル機器からログイン<br>
+Check your email…Eメールを見てください<br>
+We sent an email to you…joel@joelcalifa.comにEメールを送りました。Magic Linkからログインできます。<br>
+Open Mail App…メールアプリを開く<br>
+Sign in to a different team…違うチームにログインする</p><p>（右枠）<br>
+Hello friend,…ようこそ<br>
+You requested that we send you…私たちのモバイルアプリに簡単にログインできるリンクの送付リクエストを受け付けました。ご希望はこのコマンドですね。さあどうぞ。<br>
+Sign in to slack on your…モバイルでSlackにログインする<br>
+Not on your mobile devide…<strong>モバイル機器ではありませんか？</strong>　このリンクが使えるのはiOS、Android、または……<br>
+</p><p>Yahooも、パスワードを使わなくなってきており、<a href="http://yahoo.tumblr.com/post/131217400419/yahoo-account-key-signing-in-has-never-been" rel="nofollow" title="" class="ext-link">Yahoo Accoun Key</a>を導入しているところです。”2要素”という用語は公式リリースでは使われてこそいませんが、その価値は明らかです。将来的にパスワードは不要となるのです。</p><p>この優れたUI要素は、（アカウントがユーザにとってある程度重要である場合に）<a href="http://research.microsoft.com/pubs/192108/chi13b.pdf" rel="nofollow" title="" class="ext-link">効果的であると証明されました</a> 。<br>
+パスワード強度メータは、より強固なセキュリティのパスワードを使いたいというユーザの意欲をかきたてます。この特別な意欲が”パスワード強度メータをグリーンにする”ことだというのは、たいした問題ではありません。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/strengthmeter.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/strengthmeter.png" alt="strengthmeter" width="374" height="74" class="alignnone size-full wp-image-5515"></a><br>
+これが登録フォームに追加されるべきなのは明らかですが、パスワード強度メータそのものにも問題があります。</p><p><strong>多くの場合、メータはとてもあいまいです。</strong>“弱いパスワードです”と表示されても、必ずしも、よりセキュリティが強固なパスワードの作り方を教えてくれるわけではありません。”優れたパスワードです”と表示されても、なぜ優れているかを教えてくれません。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/dropboxhint.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/dropboxhint.png" alt="dropboxhint" width="527" height="275" class="alignnone size-full wp-image-5516"></a><br>
+<em>注釈：<br>
+I agree to Dropbox terms…Dropboxの規約に同意します。<br>
+Sign up for free…登録無料<br>
+Week…弱い<br>
+Good passwords are hard to guess…優れたパスワードは推測しにくいものです。一般的ではない単語や身内のジョーク、標準的ではない大文字の使い方、創作スペリング、自明ではない数字や記号などを使いましょう。<br>
+</em></p><p>Dropboxのパスワード強度メータは、全く同じ内容を表示します。セキュリティの強固なパスワードを入力しても変わりません。</p><p><strong>パスワード強度メータは、頑固なのです。</strong>あるメータでは優れたパスワードでも、他のメータでは弱いパスワードとなる可能性があります。メッセージの表現が足りない上に、技術に疎いユーザに大きな混乱を与える恐れがあります。</p><p>幅広く高い評価を得ている<a href="https://github.com/dropbox/zxcvbn" rel="nofollow" title="" class="ext-link">zxcvbn</a>など、何か1つの評価システムを標準とすることで、この問題に対処できます。</p><p>技術的なことがよく分からないユーザにとって、追加情報とガイダンスが表示されるパスワード強度メータは大変役に立ちます。登録するその時だけではなく、今後、あらゆる登録を行う際に同様に役に立つのです。</p><p>おばあちゃんに横柄な態度をとることはやめて、良いパスワードの作り方の説明を始めましょう。</p><p>DigitalOceanでは、ユーザへの教育を信条としています。それが、私たちが<a href="https://www.digitalocean.com/community" rel="nofollow" title="" class="ext-link">コミュニティ</a>に多大な投資をする理由です。私たちは、ユーザを路頭に迷わせたくありませんし、チュートリアルの手順に従っていればいいなどとは考えていません。ユーザに、自分のしていることを<em>理解</em>してほしいのです。成長してほしいのです。</p><p>以下のデザインパターンは、パスワードセキュリティガイド（以下PSG）と私たちが呼ぶものです。これは私が作ったアプリケーションで、登録プロセスについて上に述べた姿勢を表すものです。</p><p>PSGと一般的なパスワード強度メータとの主な違いは、ユーザが選んだパスワードの強度を伝えるだけではなく、その<em>理由</em>を伝える点です。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/strengthmeter.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/strengthmeter.png" alt="strengthmeter" width="374" height="74" class="alignnone size-full wp-image-5515"></a><br>
+もう一度見てみましょう。選択したパスワードのどういう側面が”まあまあ”なのでしょうか。特殊な文字列ではないからでしょうか。頻繁に使われるパスワードの1つだからでしょうか。長さが問題でしょうか。このサイトがパスワードに関して口うるさいだけでしょうか。一体、なぜこの評価になったのでしょうか。</p><p>技術に疎いユーザがこのメータから理解することは何でしょう。それはたった1つです。つまり、この口うるさいパスワードシステムはイライラするし、頭が悪いし、何よりも、時間のムダだということです。</p><p>より良いパスワードを作成するモチベーションは単純です。それは、この入力フォームを終えてアプリを使いたいということです。メータのバーをグリーンにすることは面白いかもしれませんが、いつまでも面白いわけではありません。いまだかつてそんなことはなかったからです。</p><p>パスワードメータをグリーンにすることや、入力フォームから抜け出すといったこととは別の方向にモチベーションを移しましょう。<strong>セキュリティのために良いパスワードをユーザに選んでもらうようにしましょう。</strong></p><p>では、次のストーリーを想像してみてください。技術に疎いユーザが”qwerty”とパスワードを入力したところ、以下のようなメッセージが表示されました。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/signupwarning.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/signupwarning.png" alt="signupwarning" width="774" height="367" class="alignnone size-full wp-image-5517"></a><br>
+<em>注釈：<br>
+Sign Up…登録<br>
+Pick stronger password to continue…続けるにはもっと強固なパスワードにしてください。<br>
+WARNING!…警告！<br>
+This password is on a list…このパスワードは<b><u>頻繁に使われるパスワード</u></b>のリストに載っています。このパスワードを使うと、<b>あなたのアカウントがハッキングされる恐れがあります。</b><br>
+View the list…他にもどのようなパスワードの使用が危険か、<b><u>リストをご覧ください。</u></b><br>
+</em></p><p>パスワードが基準を満たさないということしか伝えない漠然とした内容では、ユーザがシステムに対して怒りを覚えるだけで、何の利点もありません。私たちはそのかわりに、何が問題なのかを説明します。</p><p>このユーザはほんの少し前まで、破られることも推測されることもない”qwerty”というパスワードに絶大な自信を持っていました。しかし今では、これが最もよく使われるパスワードの第6位であることを知ったのです。非難の気持ちは、イライラするパスワードシステムからすぐに逸れて、自分自身に向けられました。でも、これで良かったのです。今回だけに限らず、将来的にもどうするべきかが分かったのですから。二度と”qwerty”を使うことはないでしょうし、次回、アプリがパスワードを拒否した時に、怒り出す前にもう一度考えるでしょう。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/morewarnings.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/morewarnings.png" alt="morewarnings" width="886" height="251" class="alignnone size-full wp-image-5518"></a><br>
+<em>注釈：<br>
+（左枠）<br>
+警告！<br>
+<b>このパスワードは辞書に載っています。</b>ハッカーはパスワードを推測しやすいように日常的に辞書を使っています。<br>
+単語を作り出すか、2つ以上の単語を使用してください。</em></p><p>（中央枠）<br>
+警告！<br>
+<b>このパスワードは年を使っているようです。</b>もしこの年があなたに関係ある場合、ハッカーがそれを利用してパスワードを推測する恐れがあります。<br>
+他人があなたのことを推測できるような個人情報の使用を避けるのが最良策です。</p><p>（右枠）<br>
+警告！<br>
+<b>このパスワードは短すぎます。</b>6文字の場合、10分以内にパスワードが破られる恐れがあります。<br>
+<b>さらに6文字追加すると、破るのに3年かかります。</b>パスワードは長いほど良いと言えます。<br>
+</p><p>私たちはまた、ユーザを大人の存在として扱い始めています。ユーザを教育することで、私たちは役割を果たしました。もちろん、今後も”よく使われる上位10,000のパスワードを使ってはいけない”とか”あまりに短すぎるパスワードを使ってはいけない”などの常識的なルールを設定することはできます。しかし、もしユーザがこうした標準ルールに適うけれども比較的弱いパスワードを使いたい場合には、使用したことによる影響について学び、結果を受け止めることができるようであるべきです。</p><p>別の方法として、ユーザに登録フォームを送信させて、その直後にヒントを与える方法があります。例えば次のようなものです。</p><p><a href="http://postd.cc/wp/wp-content/uploads/2015/12/passwordmodal.png"><img src="http://postd.cc/wp/wp-content/uploads/2015/12/passwordmodal.png" alt="passwordmodal" width="602" height="548" class="alignnone size-full wp-image-5519"></a><br>
+<em>注釈：<br>
+Your password could be better!…あなたのパスワードはもっと良くなります！<br>
+Short passwords…短いパスワードはとても簡単に破られます。<br>
+文字を加えるごとに、パスワードは強固になっていきます。<br>
+Your paswords is 6 characters…あなたのパスワードは6文字なので、10分以内に破られる恐れがあります。<br>
+Add more 6 characters…さらに6文字追加すると、破るのに3年もかかります。<br>
+Enter new password…新しいパスワードを入力する<br>
+Skip…スキップ<br>
+Continue with new password…新しいパスワードで続ける<br>
+</em></p><p>私は、あらゆる登録フォームでPSGが使われている未来を想像しています。ユーザは特定のパスワードを選択するよう強制されるのではなく、<em>そのプロセスを通じてより良い教育を受ける</em>のです。どういうパスワードが望ましくないもので、それはなぜなのかを学び、新たなフォームに入力する度にその知識を使えるのです。</p><p>PSGはzxcvbnのようなオープンソースにするか、zxcvbnのようなライブラリに<em>相当するUI</em>にするべきです。こうすれば、パスワードの強度を決める際や新たなセキュリティ上の不具合と戦うためにアップデートされた際に、あらゆるアプリが同じヒューリスティックを使えます。また、クラウドソーシングで収集された同じベストプラクティスを、ユーザの教育用に複数のアプリで使えます。</p><p>本稿を読んで、標準的なパスワード入力にPSGを容易に組み込むプロジェクトに一緒に取り組みたいという方がいましたら、<a href="https://twitter.com/notdetails" rel="nofollow" title="" class="ext-link">@notdetails</a>までご連絡ください。</p><p>セキュリティ確保の方法としてのパスワードは、完璧とは言い難い状況です。また、パスワードの働きが分かっている人々は、パスワードは斜陽の技術であり、いつか<a href="https://getclef.com/" rel="nofollow" title="" class="ext-link">Clef</a>のような2要素認証サービスに取って代わられる可能性があることを知っています。</p><p>しかし、平均的ユーザにとっては、<a href="http://qz.com/437920/is-it-time-to-finally-get-rid-of-the-password/" rel="nofollow" title="" class="ext-link">パスワードがすぐに姿を消してしまうということはないでしょう</a>。残された時間をできるだけ有効に使い、パスワードをより良いものにしましょう。</p><p>このアイデアが気に入りましたか？　この話を<a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Fjoelcalifa.com%2Fblog%2Fpatronizing-passwords%2F&amp;ref_src=twsrc%5Etfw&amp;text=Passwords%20suck.%20Let%27s%20make%20them%20better!%20Check%20out%20Patronizing%20Passwords.&amp;tw_p=tweetbutton&amp;url=http%3A%2F%2Fjoelcalifa.com%2Fblog%2Fpatronizing-passwords&amp;via=notdetails" rel="nofollow" title="" class="ext-link">Twitter</a>や<a href="https://www.facebook.com/sharer/sharer.php?app_id=118010014971592&amp;sdk=joey&amp;u=http%3A%2F%2Fjoelcalifa.com%2Fblog%2Fpatronizing-passwords&amp;display=popup&amp;ref=plugin&amp;src=share_button" rel="nofollow" title="" class="ext-link">facebook</a>で拡散してください。そうすれば、変化をもたらすことができるのです。</p><p><strong>Joel CalifaはDigitalOceanのプロダクトデザインリーダーです。</strong><br>
+デザインの枠を超え、人生に対する情熱によって、新たな素晴らしい友人を増やしています。もし本稿を楽しんでいただけたら、<a href="http://twitter.com/notdetails" rel="nofollow" title="" class="ext-link">Twitter</a>か<a href="mailto:joel@joelcalifa.com">Eメール</a>でご連絡ください。</p>

@@ -1,0 +1,159 @@
+Learn Raw React — no JSX, no Flux, no ES6, no Webpack… (2015-12-14) by James K Nelson
+James K Nelson
+人生の半分以上もJavaScriptでプログラミングしています。そしてその過程で学んだことを皆さんと共有したいと思っています。(編注：2016/07/29、いただいたフィードバックをもとに記事を修正いたしました。)免責事項：　私はJSX、Flux、ES6、そしてwebpackを非常に気に入っています。これらのツールについては他のシリーズで話します。React.jsが騒ぎを起こしているのはご存知の通りです。確かに、XMLHttpRequest以来の良いツールです。しかし、調査に数時間を費やした挙句、あまりに多くの用語に圧倒されただけで終わっていないでしょうか。JSX、flux、ES6、webpack、react-routerが使える今、他に必要なのはReactの使い方を説明してくれる人だけです。喜んでください、それがまさに当シリーズでやろうとしていることです。信じられませんか？大丈夫、2分後、初めてのReactアプリを作った後には納得いただけるでしょう。何もダウンロードせずに、です。次の練習をやってみてください。JavaScript、CSS、HTML を使ったことはありますか。いいですね。それならこの練習ができます。この練習の成果物は、あなたが作る最初のReactアプリを含むHTMLファイル1点です。3つのステップがあります。このHTMLを新規ファイルにコピーし、適当な場所に保存しましょう。このHTMLファイルには2つの重要な役割があります。レンダリングしたコンテンツ（idreact-appと共に）が動くdivを作成し、Reactが動く2つのライブラリファイルをロードします。コピーできたら、次に進みましょう。HTMLファイルの末尾に、次のスクリプトを新規&lt;script&gt;タグに入力します。
+
+ちょっとした仕事ですね。しかし、繰り返し入力したことで、createElementメソッドの概念がつかめるとよいのですが。まだ見えてこない、という人にはステップ3が役立つでしょう。WebブラウザでHTMLファイルを開き、アウトプットが次のようになっていることを確認してください。どうでしょうか。良かった、分かりましたね。あなたは初めてのReact.jsアプリをnpmさえインストールせずに作ってしまいました。お祝いを兼ねて、その機能を見ていきましょう。基本的に、ReactはHTMLをJavaScriptでレンダリングするツールです。ReactDOM.renderは、ReactElementオブジェクトを使って、何をレンダリングするかを説明し、指定されたDOM nodeに結果を追加します。しかし、ReactElementはどうやって作るのでしょうか。ここでReact.createElementの出番です。React.createElementは3つのパラメータを引数にとり、ReactElementを返します。Reactのドキュメンテーションにはこのように記述されています。type引数が、使用するHTML要素のタイプを指定します。また、カスタム要素も指定します（後で説明します）。props引数はどの属性がHTML要素に定義されているかを指定する方法です。練習に出てきたmailtoリンクから推測できたかもしれません。最後に、children引数は、返された要素のコンテンツに使われる文字列、ReactElementオブジェクト（あるいはその配列）です。childrenを除外するか指定するか選ぶことで、ReactElement1つか、ツリー全体を返します。createElementは素のJavaScriptなので、ループ、if文、その他JavaScriptで行えるものなら何でも挿入できます。さらに、JSONに格納されたデータに簡単に代入することも可能です。例えば、連絡先のリストを持っているものの、e-mailアドレスのないコンタクトはレンダリングしたくない場合、次のような記述が考えられます。すっきりしています。つまりReactは非常に多弁なJavaScriptベースのテンプレート化システムであると言えます。しかし… それでは熱心に評価される理由になりません。何が特長なのでしょうか。React.createElementのタイプシグネチャ内の小さなReactClassに気づいたでしょうか。使用しないので省きましたが、何を意味するか分かりますか。ドラムロールの音をください、答えです。「React.createElementは標準HTMLに限定されない」。オリジナルのコンポーネントを作ることもできるのです。どうやって？　React.createClassを使って。この小さなスニペットはContactItemと呼ばれる新規コンポーネントを定義します。HTML要素と同様に、ContactItemは属性のリスト（propsと呼びます）を受け入れます。HTML要素と異なるのは、どんなpropsでも指定できることです。上述のコンポーネントは次のように使えます。そして予想どおり、elementにはコンポーネントのrender関数が返す値が含まれます。次の練習で理解度をテストしてみましょう。学習したことを使って、練習1で書いた答え、特に次の点をリファクタリングしましょう。次のデータを使ってください。終わったら、次のfiddleと照らし合わせてみてください。練習 2の私の答えでは、propTypesオブジェクトに2種類の値、isRequiredが付いている値と付いていない値を使っていることに気づいたでしょうか。このサフィックスは、指定されたプロパティが必ずReact.createElementに渡されなければならないことを示しており、Reactの全てのprop typesに適用できます。しかし、ちょっと待ってください。propTypesオブジェクトは実際のところ何をしているのでしょうか。ほとんどの場合、 propTypesは何もしていないというのが答えです。事実、完全になくしてもアプリは正確に機能します。ではなぜそこにあるのでしょう。propTypesはデバッグを行うメカニズムなのです。これによってReactはcreateElementに渡されたprops引数が有効かどうかをリアルタイムでチェックします。正しくない場合はReactはコンソールに警告を出します。この手引きで propTypesを紹介するのは、それが必須事項ではなくとも、長い目で見ると多くの無駄を防ぐことになるからです。そして私のニュースレターに登録するとダウンロードできる、Cheat Sheet（PDF）を印刷しておけば、より労力を軽減できます。話を元に戻します。ここまででデータを表示させる方法が分かりました。次に更新の仕方を学びましょう。現状、私たちのアプリは静的データ一式を取り扱い、1度だけDOMへレンダリングします。しかし、データに変化がある場合には何が起こるのでしょうか。Reactと呼ばれるツールにどのような期待をしようと、何も変わりません。他の多くのJavaScriptフレームワークの自動更新ビューとは異なり、Reactは手動でレンダリングの命令を出さなければなりません。その方法を説明します。最初のrender関数の呼び出しによって、全く新しいHTML要素のツリーが#react-app以下に作成されますが、2回目の呼び出しは変更が生じたところのみの変更しか行いません。これがパフォーマンスにおいてReactが好評価を得ている理由です。実際に次のことをしてみます。2回目のrender関数の呼び出しは全く何もしません。特別なkeyプロパティをそれぞれの要素の配列に指定してレンダリングしない限りは何もしません。なぜこうなのか理解するにはrenderがどのように動くか少し知る必要があります。ReactDOM.renderの最初の呼び出しは簡単です。ReactElement内で渡され、対応のHTMLツリーを#react-appの下に作成します。しかし上でも述べたように2回目以降の呼び出しでは、それ以前にレンダリングされたHTML要素は、対応するReactElementオブジェクトに変更がない限り、更新されません。これはなぜなのでしょうか。何を変更するのかを決定する時、Reactは新しいReactElementツリーと前のツリーを比較します。その際に、いくつかのルールに従います。ただし、ここで注意すべき点が1つあります。Reactが同一のtypeとpropを持つReactElementの配列を見つけると、見た目は同一のようでも、本当に同一であるかは知ることはできません。例えば要素がuser focusプロパティを持っているか否かの場合のように、要素が内部状態を持つことができるからです。しかし、それぞれの要素の区別がつかなくなってしまうため、Reactがこれら要素を再度レンダリングすると問題が発生します。その結果、配列の順番が変更になったのか分からなくなってしまうのです。前述の例のkeyプロパティはここで使用することになります。keyプロパティはReactが要素を区別できるようにし、DOMとReactElementのツリーを整列しておきます。理論はこのくらいにして、実用的なことに移りましょう。アプリにフォームを追加できるだけの知識が備わりました。ユーザインタラクションがなくてもいいのであれば、の話です。しかし、なぜこのような制約があるのでしょう。Reactでは、input要素は特別のことではありません。valueプロパティを取り、そのvalueが何であるかを表示します。コンポーネントが外部から渡されたプロパティを直接変更できないため、ユーザ入力によって値の表示を変更してしまうことはありません。少しこれを考えてみましょう。value属性をフォームに入力しても、何も変わりません。ただし、値を変えられないわけではありません。inputイベントをリッスンして値を必要に応じて更新すれば好きな値に変更することができます。これについては後ほど触れます。value以外にもinput要素に持たせたいプロパティを持たせることが可能です。しかし、ちょっとした例外がいくつかあります。HTML &lt;input&gt;に渡したい属性もpropsで提供されています。次の2つの例外は知っておくべきでしょう。私の作成したReact Cheat Sheetに上の例外は記載されています。私のニュースレターに登録した人にお配りしています。では、次のpropTypesを持つ、新しいContactFormのコンポーネントクラスを作成します。&lt;form&gt;要素をレンダリングすると、nameやemailが入力できる&lt;input&gt;要素が表示され、descriptionが入力できる&lt;textarea&gt;が表示され、送信のための&lt;button type="submit"&gt;が表示されるはずです。複雑化を避けるためにもラベルの代わりにプレースホルダを使うといいでしょう。そして、Reactのtextareaコンポーネントがvalueをｃhildrenとしてではなくpropsとして受け取ることを覚えておきましょう。ContactFormクラスを作成した後、contactプロパティとして渡される空白のコンタクトをコンタクトリストの下に追加してください。できましたね。すばらしい。私の実装と比べてみてください。違いを見つけてほしいとは思いますが、私の実装に全ての行が一致する必要はないので、一致させることに固執しないでください。重要なのは動くものを書くことです。まだ記事を読み終わっていないのに、すでに売る気満々です。しかし、アプリの見た目が悪かったら誰も見向きもしません。そこで、ちょっとしたスタイルを追加しましょう。どうすればいいのでしょう。このアプリは小さいので、HTMLセレクタを使用してスタイルを付けることもできます。しかし、別のリストを作ってしまうとアプリが動かなくなってしまいまので、後の苦労を避けるためにもクラスを指定しましょう。競合を避けるため、親コンポーネントのクラス名を名前空間に定義します。ここでは、ContactItemコンポーネントは次のようになります。
+
+コンポーネントのrender関数の一部ではないcreateElement呼び出しでクラス名を取得するにはどうすればいいのでしょうか。ほとんどのReact系のプロジェクトでは、全てがクラスによって組織化されています。1つのReact.createElementを呼び出し、直接ReactDOM.renderに渡されるトップレベルの要素をレンダリングします。このアプリでは、トップレベルのContactViewを次のシグネチャを使用しましょう。新規アプリにスタイルを付けたい場合、ContactViewを上で定義したとおりに作成して、classNameプロパティを必要に応じて追加して、さらにHTMLファイルにスタイルシートを追加します。どのようにすればいいかヒントをあげましょう。fiddleを用意してみました。見た目の良いアプリを作成するために知識は揃いました。しかし、インタラクティブにする方法はどのようにして学べばよいのでしょうか。この記事は生のReactシリーズの第一弾です。毎週新しい記事を掲載予定です。Reactで本物のアプリを実際に読者が作成するのに十分な情報を出せるまで書き続けます。本物のアプリの定義は次のとおりです。最新情報： Part 2: Ridiculously Simple Formsを掲載しました。emailアドレスをくれた方には、新しい記事を発表のタイミングでお送りします。さらに特典としてReact、ES6、JavaScriptのPromiseの3つの印刷用PDF Cheat Sheetを差し上げます。
+
+.ck_form {
+background: #fff url(data:image/gif;base64,R0lGODlhAQADAIABAMzMzP///yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MUQ5NjM5RjgxQUVEMTFFNEJBQTdGNTQwMjc5MTZDOTciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MUQ5NjM5RjkxQUVEMTFFNEJBQTdGNTQwMjc5MTZDOTciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxRDk2MzlGNjFBRUQxMUU0QkFBN0Y1NDAyNzkxNkM5NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxRDk2MzlGNzFBRUQxMUU0QkFBN0Y1NDAyNzkxNkM5NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAEAAAEALAAAAAABAAMAAAICRFIAOw==) repeat-y center top;
+font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+line-height: 1.5em;
+overflow: hidden;
+color: #666;
+font-size: 16px;
+border-top: solid 20px #3071b0;
+border-top-color: #b30e2f;
+border-bottom: solid 10px #3d3d3d;
+border-bottom-color: #5f0719;
+-webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+-moz-box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+clear: both;
+margin: 20px 0px;
+}
+.ck_form * {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+ck_subscribe_form {
+clear: both;
+}
+.ck_form_content, .ck_form_fields {
+width: 50%;
+float: left;
+padding: 5%;
+}
+.ck_form.ck_horizontal {
+}
+.ck_form_content {
+border-bottom: none;
+}
+.ck_form.ck_vertical {
+background: #fff;
+}
+.ck_vertical .ck_form_content, .ck_vertical .ck_form_fields {
+padding: 10%;
+width: 100%;
+float: none;
+}
+.ck_vertical .ck_form_content {
+border-bottom: 1px dotted #aaa;
+overflow: hidden;
+}
+@media all and (max-width: 499px) {
+.ck_form {
+background: #fff;
+}
+.ck_form_content, .ck_form_fields {
+padding: 10%;
+width: 100%;
+float: none;
+}
+.ck_form_content {
+border-bottom: 1px dotted #aaa;
+}
+}
+.ck_form_content h3 {
+margin: 0px 0px 15px;
+font-size: 24px;
+padding: 0px;
+}
+.ck_form_content p {
+font-size: 14px;
+}
+.ck_image {
+float: left;
+margin-right: 5px;
+}
+.ck_errorArea {
+display: none;
+}
+ck_success_msg {
+padding: 10px 10px 0px;
+border: solid 1px #ddd;
+background: #eee;
+}
+.ck_label {
+font-size: 14px;
+font-weight: bold;
+}
+.ck_form input[type="text"], .ck_form input[type="email"] {
+font-size: 14px;
+padding: 10px 8px;
+width: 100%;
+border: 1px solid #d6d6d6; 
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px; 
+background-color: #f8f7f7; 
+margin-bottom: 5px;
+height: auto;
+}
+.ck_form input[type="text"]:focus, .ck_form input[type="email"]:focus {
+outline: none;
+border-color: #aaa;
+}
+.ck_checkbox {
+padding: 10px 0px 10px 20px;
+display: block;
+clear: both;
+}
+.ck_checkbox input.optIn {
+margin-left: -20px;
+margin-top: 0;
+}
+.ck_form .ck_opt_in_prompt {
+margin-left: 4px;
+}
+.ck_form .ck_opt_in_prompt p {
+display: inline;
+}
+.ck_form .ck_subscribe_button {
+width: 100%;
+color: #fff;
+margin: 10px 0px 0px;
+padding:  10px 0px;
+font-size: 18px;
+background: #b30e2f;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px; 
+cursor: pointer;
+border: none;
+text-shadow: none;
+}
+.ck_form .ck_guarantee {
+color: #626262;
+font-size: 12px;
+text-align: center;
+padding: 5px 0px;
+display: block;
+}
+.ck_form .ck_powered_by {
+display: block;
+color: #aaa;
+}
+.ck_form .ck_powered_by:hover {
+display: block;
+color: #444;
+}
+.ck_converted_content {
+display: none;
+padding: 5%;
+background: #fff;
+}
+
+注釈：役に立つ記事やCheat Sheet、コードをお送りします。決して大量の無駄な情報を送るようなことはしません。絶対に迷惑メールは送りません。感想をぜひ教えてください。@james_k_nelsonにツイートするか、 james@jamesknelson.comにメールしてください。読んでくださってありがとうございます。関連リンク：

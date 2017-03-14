@@ -1,0 +1,36 @@
+<p><a href="https://medium.com/@sebaslogen/rxjava-recipe-convert-any-android-event-into-a-stream-c614ca686db0#.nd9sk3xas" rel="nofollow" title="" class="ext-link">RxJava recipe: Convert any Android event into a stream (2016-08-29)</a> by <a href="neoranga55@gmail.com">Sebastian Lobato Genco</a></p><p>まず、これから解決していく問題を先に述べます。</p><p>イベント（例えばOSの通知やBluetoothの状態）を受け取る部分がアプリ内に複数あり、各部分に関係がある時にのみその情報を受け取りたい場合を想像してみてください。</p><p>今回の記事では、RxJavaの様々なコンポーネントを組み合わせることで、この問題を解決する道を探ろうと思います。本題に入る前に、<a href="http://reactivex.io/documentation/subject.html" rel="nofollow" title="" class="ext-link">Subject</a>や<a href="http://reactivex.io/documentation/operators/replay.html" rel="nofollow" title="" class="ext-link">Replay</a>、そして<a href="https://github.com/ReactiveX/RxJava/wiki/Connectable-Observable-Operators" rel="nofollow" title="" class="ext-link">Connectable Observables</a>などのコンセプトを理解しておいてください。今回の記事は、各コンポーネントのニュアンスを理解するのに役立つと思います。</p><p>ここで、例え話を使って問題を示してみます。</p><p><img class="progressiveMedia-image js-progressiveMedia-image" data-src="https://cdn-images-1.medium.com/max/900/1*GeOFM2LFKi3E8LX4tzSMMQ.jpeg" src="https://cdn-images-1.medium.com/max/900/1*GeOFM2LFKi3E8LX4tzSMMQ.jpeg"><br>
+画像著作者：vectomart – Fotolia</p><p>次のような機能を持つ自動サウンドシステムがリビングリームにあるとしましょう。</p><p>解決策は（クッキングレシピの要領で）順を追って紹介し、具材を追加する理由や、それぞれが解決しようとしている問題を説明していきます。</p><p>RxJavaの最初の具材は<a href="https://github.com/JakeWharton/RxRelay" rel="nofollow" title="" class="ext-link">RxRelay</a>のBehaviorRelay（またの名を安全なBehaviorSubject）です。これは今回の料理完成に必要な機能の大半をカバーするもので、購読/停止イベントを提供し、Hot Observableと同じように複数のobserverに対してマルチキャストし、前回に発行された値を新しいobserverにリプレイします。</p><p>この具材を準備する手順は以下のとおりです。</p><p><img class="progressiveMedia-image js-progressiveMedia-image" data-src="https://cdn-images-1.medium.com/max/900/1*quj6-O487X1LrD_BFWdwhg.png" src="https://cdn-images-1.medium.com/max/900/1*quj6-O487X1LrD_BFWdwhg.png"><br>
+画像著作者：<a href="http://reactivex.io/documentation/subject.html" rel="nofollow" title="" class="ext-link">reactivex.io</a></p><p>仕組み自体はこれで大丈夫そうですが、1つだけ問題があります。それはObservableを新たに購読する度にListenerに余分な登録が行われ、Observableの購読を停止する度に、たとえ他にも多数のobserverが依然としてObservableを購読中でも、Listenerから余分な登録解除が行われてしまうことです。</p><p>つまり、このレシピは並列する複数のobserverには使えないということになります。</p><p><script src="https://gist.github.com/sebaslogen/4d92f030b0bfaae7da49d439a1dfa3f0.js"></script><br>
+上記のコードは次の出力を生成します。</p><p>BehaviorRelayProblem -&gt; observer-1 <strong>subscribes</strong><br>
+BehaviorRelayProblem -&gt; <strong><em>doOnSubscribe</em></strong><br>
+BehaviorRelayProblem -&gt; observer-1 -&gt; onNext with 1<br>
+BehaviorRelayProblem -&gt; observer-2 <strong>subscribes</strong><br>
+BehaviorRelayProblem -&gt; <strong><em>doOnSubscribe</em></strong> &lt;= 問題：不要な呼び出し<br>
+BehaviorRelayProblem -&gt; observer-2 -&gt; onNext with 1<br>
+BehaviorRelayProblem -&gt; observer-1 -&gt; onNext with 2<br>
+BehaviorRelayProblem -&gt; observer-2 -&gt; onNext with 2<br>
+BehaviorRelayProblem -&gt; observer-1 <strong>unsubscribes</strong><br>
+BehaviorRelayProblem -&gt; <strong><em>doOnUnsubscribe</em></strong> &lt;= 問題：不要な呼び出し<br>
+BehaviorRelayProblem -&gt; observer-2 unsubscribes<br>
+BehaviorRelayProblem -&gt; <strong><em>doOnUnsubscribe</em></strong></p><p>この問題に対するシンプルな対策はBehaviorRelayに<strong><a href="http://reactivex.io/documentation/operators/refcount.html" rel="nofollow" title="" class="ext-link">share</a>()</strong>オペレータを組み合わせることです。これによりソースのObservableのdoOnSubscribe()メソッドは、最初のobserverがストリームを購読した時に1回だけ呼び出され、同様にdoOnUnsubscribe()は、最後のobserverがストリームの購読を停止した時に1回だけ呼び出されます。</p><p><img class="progressiveMedia-image js-progressiveMedia-image" data-src="https://cdn-images-1.medium.com/max/900/1*1b8wM-8Khod_aXB3tMx9bw.png" src="https://cdn-images-1.medium.com/max/900/1*1b8wM-8Khod_aXB3tMx9bw.png"><br>
+画像著作者：Netflixオリジナル作品</p><p><script src="https://gist.github.com/sebaslogen/c9238d37fc1cb4673d5ba86dce8ece28.js"></script></p><p>上記のコードは次の出力を生成します。</p><p>share -&gt; observer-1 <strong>subscribes</strong><br>
+share -&gt; <strong><em>doOnSubscribe</em></strong><br>
+share -&gt; observer-1 -&gt; onNext with 1<br>
+share -&gt; observer-2 <strong>subscribes</strong><br>
+&lt;= <strong>問題：呼び出しがない</strong> “<em>observer-2 -&gt; onNext with 1</em>”<br>
+share -&gt; observer-1 -&gt; onNext with 2<br>
+share -&gt; observer-2 -&gt; onNext with 2<br>
+share -&gt; observer-1 <strong>unsubscribes</strong><br>
+share -&gt; observer-2 <strong>unsubscribes</strong><br>
+share -&gt; <em><strong>doOnUnsubscribe</strong></em></p><p>完成にかなり近づいていますが、あと一歩です。上記では2番目のobserverが購読した際、そのobserverは新しいイベントが発行されるまで何の値も取得できません。新たなobserverが購読をする時、それ以前のobserverに対してイベントは発行済みであることを考慮すると、新しいobserverに前回の値をすぐに発行できた方がいいでしょう。</p><p>この問題の答えは.share()を<a href="https://github.com/JakeWharton/RxReplayingShare" rel="nofollow" title="" class="ext-link">RxReplayingShare</a>に置き換えることです。これでリプレイのキャッシュはReplayingShareオブジェクトの一部となるため、BehaviorRelayではなくPublishRelayを使うことになります。</p><p><img class="progressiveMedia-image js-progressiveMedia-image" data-src="https://cdn-images-1.medium.com/max/900/1*VMGbVY1xKT2K-BkD7um14Q.png" src="https://cdn-images-1.medium.com/max/900/1*VMGbVY1xKT2K-BkD7um14Q.png"><br>
+画像著作者：Jake Wharton 2016年</p><p><script src="https://gist.github.com/sebaslogen/b9cf3683b002777ab99e2f08b29a477c.js"></script><br>
+上記のコードは次の出力を生成します。</p><p>ReplayingShare -&gt; observer-1 <strong>subscribes</strong><br>
+ReplayingShare -&gt; <strong><em>doOnSubscribe</em></strong><br>
+ReplayingShare -&gt; observer-1 -&gt; onNext with 1<br>
+ReplayingShare -&gt; observer-2 <strong>subscribes</strong><br>
+ReplayingShare -&gt; observer-2 -&gt; onNext with 1<br>
+ReplayingShare -&gt; observer-1 -&gt; onNext with 2<br>
+ReplayingShare -&gt; observer-2 -&gt; onNext with 2<br>
+ReplayingShare -&gt; observer-1 <strong>unsubscribes</strong><br>
+ReplayingShare -&gt; observer-2 <strong>unsubscribes</strong><br>
+ReplayingShare -&gt; <strong><em>doOnUnsubscribe</em></strong></p><p>この方法が適用できるのは、例えばサービスによって生成されたイベントにアプリの一部が関係する時にのみ実行する必要があるようなAndroidのサービスで、それが誰も関心を持たなくなるまで要素を生成し続けた後、シャットダウンするような場合です。</p><p>個人的に、この問題を解決するために他の人がどういうレシピでRxJavaのコンポーネントを組み合わせるかというのにとても興味があります。RxJavaの具材を別のやり方でミックスしても、同様の結果を得ることはできるはずです。<em>同じ結果にたどり着く別の調理法</em>があれば、ぜひコメントでお聞かせください。</p><p><strong>グルメ向けのコツ：</strong>最近導入された<a href="http://stackoverflow.com/documentation/rx-java/2341/backpressure/10629/creating-backpressured-data-sources" rel="nofollow" title="" class="ext-link">Observable.fromEmitter</a>()は、Listenerのregister/unregisterのユースケースをカバーするために設計されており、ここで述べた問題もfromAsyncで解決して同様の結果を得ることが可能です。</p>

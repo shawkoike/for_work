@@ -1,0 +1,159 @@
+<p><a href="http://jamesknelson.com/learn-raw-react-no-jsx-flux-es6-webpack/" rel="nofollow" title="" class="ext-link">Learn Raw React — no JSX, no Flux, no ES6, no Webpack…</a> (2015-12-14) by <a href="james@jamesknelson.com">James K Nelson</a><br>
+<strong>James K Nelson</strong><br>
+人生の半分以上もJavaScriptでプログラミングしています。そしてその過程で学んだことを皆さんと共有したいと思っています。</p><p><small>(編注：2016/07/29、いただいたフィードバックをもとに記事を修正いたしました。)</small></p><p><em>免責事項：　私はJSX、Flux、<a href="http://jamesknelson.com/es6-the-bits-youll-actually-use/" rel="nofollow" title="" class="ext-link">ES6</a>、そして<a href="http://jamesknelson.com/webpack-made-simple-build-es6-less-with-autorefresh-in-26-lines/" rel="nofollow" title="" class="ext-link">webpack</a>を非常に気に入っています。これらのツールについては他のシリーズで話します。</em></p><p>React.jsが騒ぎを起こしているのはご存知の通りです。確かに、<code>XMLHttpRequest</code>以来の良いツールです。しかし、調査に数時間を費やした挙句、あまりに多くの用語に<em>圧倒された</em>だけで終わっていないでしょうか。JSX、flux、ES6、webpack、react-routerが使える今、<em>他に必要なのは<strong>React</strong>の使い方を説明してくれる人だけです。</em></p><p>喜んでください、それがまさに当シリーズでやろうとしていることです。信じられませんか？大丈夫、<em>2分後、</em>初めてのReactアプリを作った後には納得いただけるでしょう。何もダウンロードせずに、です。次の練習をやってみてください。</p><p>JavaScript、CSS、HTML を使ったことはありますか。いいですね。それならこの練習ができます。</p><p>この練習の成果物は、あなたが作る最初のReactアプリを含むHTMLファイル1点です。3つのステップがあります。</p><p>このHTMLを新規ファイルにコピーし、適当な場所に保存しましょう。</p><p>このHTMLファイルには2つの重要な役割があります。レンダリングしたコンテンツ（id<code>react-app</code>と共に）が動く<code>div</code>を作成し、Reactが動く2つのライブラリファイルをロードします。</p><p>コピーできたら、次に進みましょう。</p><p>HTMLファイルの末尾に、次のスクリプトを新規<code>&lt;script&gt;</code>タグに入力します。</p><p>
+</p>
+<p>ちょっとした仕事ですね。しかし、繰り返し入力したことで、<code>createElement</code>メソッドの概念がつかめるとよいのですが。まだ見えてこない、という人にはステップ3が役立つでしょう。</p><p>WebブラウザでHTMLファイルを開き、アウトプットが次のようになっていることを確認してください。</p><p><iframe width="100%" height="300" src="//jsfiddle.net/61ohft4r/embedded/result,js,html/" frameborder="0"></iframe></p><p>どうでしょうか。良かった、分かりましたね。あなたは初めてのReact.jsアプリを<code>npm</code>さえインストールせずに作ってしまいました。お祝いを兼ねて、その機能を見ていきましょう。</p><p>基本的に、ReactはHTMLをJavaScriptでレンダリングするツールです。<code>ReactDOM.render</code>は、<code>ReactElement</code>オブジェクトを使って、何をレンダリングするかを説明し、指定された<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction" rel="nofollow" title="" class="ext-link">DOM</a> nodeに結果を追加します。しかし、<code>ReactElement</code>はどうやって作るのでしょうか。ここで<code>React.createElement</code>の出番です。</p><p><code>React.createElement</code>は3つのパラメータを引数にとり、<code>ReactElement</code>を返します。<a href="https://facebook.github.io/react/docs/top-level-api.html#react.createelement" rel="nofollow" title="" class="ext-link">Reactのドキュメンテーション</a>にはこのように記述されています。</p><p><code>type</code>引数が、使用するHTML要素のタイプを指定します。また、カスタム要素も指定します（後で説明します）。<code>props</code>引数はどの属性がHTML要素に定義されているかを指定する方法です。練習に出てきた<code>mailto</code>リンクから推測できたかもしれません。最後に、<code>children</code>引数は、返された要素のコンテンツに使われる文字列、<code>ReactElement</code>オブジェクト（あるいはその配列）です。<code>children</code>を除外するか指定するか選ぶことで、<code>ReactElement</code>1つか、ツリー全体を返します。</p><p><code>createElement</code>は素のJavaScriptなので、ループ、<code>if</code>文、その他JavaScriptで行えるものなら何でも挿入できます。さらに、JSONに格納されたデータに簡単に代入することも可能です。例えば、連絡先のリストを持っているものの、e-mailアドレスのないコンタクトはレンダリングしたくない場合、次のような記述が考えられます。</p><p>すっきりしています。つまりReactは非常に多弁なJavaScriptベースのテンプレート化システムであると言えます。しかし… それでは熱心に評価される理由になりません。何が特長なのでしょうか。</p><p><code>React.createElement</code>のタイプシグネチャ内の小さな<code>ReactClass</code>に気づいたでしょうか。使用しないので省きましたが、何を意味するか分かりますか。</p><p><em>ドラムロールの音をください、</em>答えです。「<code>React.createElement</code>は標準HTMLに限定されない」。オリジナルのコンポーネントを作ることもできるのです。</p><p>どうやって？　<code>React.createClass</code>を使って。</p><p>この小さなスニペットは<code>ContactItem</code>と呼ばれる新規コンポーネントを定義します。HTML要素と同様に、<code>ContactItem</code>は属性のリスト（<code>props</code>と呼びます）を受け入れます。HTML要素と異なるのは、どんな<code>props</code>でも指定できることです。</p><p>上述のコンポーネントは次のように使えます。</p><p>そして予想どおり、<code>element</code>にはコンポーネントの<code>render</code>関数が返す値が含まれます。</p><p>次の練習で理解度をテストしてみましょう。</p><p>学習したことを使って、練習1で書いた答え、特に次の点をリファクタリングしましょう。</p><p>次のデータを使ってください。</p><p>終わったら、次のfiddleと照らし合わせてみてください。</p><p><iframe width="100%" height="300" src="//jsfiddle.net/6L0da2sw/1/embedded/result,js,html/" frameborder="0"></iframe></p><p>練習 2の私の答えでは、<code>propTypes</code>オブジェクトに2種類の値、<code>isRequired</code>が付いている値と付いていない値を使っていることに気づいたでしょうか。このサフィックスは、指定されたプロパティが<em>必ず</em><code>React.createElement</code>に渡されなければならないことを示しており、Reactの全ての<a href="https://facebook.github.io/react/docs/reusable-components.html#prop-validation" rel="nofollow" title="" class="ext-link">prop types</a>に適用できます。</p><p>しかし、ちょっと待ってください。<code>propTypes</code>オブジェクトは実際のところ<em>何をしている</em>のでしょうか。</p><p>ほとんどの場合、 <code>propTypes</code>は<em>何もしていない</em>というのが答えです。事実、完全になくしてもアプリは正確に機能します。ではなぜそこにあるのでしょう。</p><p><code>propTypes</code>はデバッグを行うメカニズムなのです。これによってReactは<code>createElement</code>に渡された<code>props</code>引数が有効かどうかをリアルタイムでチェックします。正しくない場合はReactはコンソールに警告を出します。</p><p><img src="http://jamesknelson.com/console-warning.png" alt="React console warning"></p><p>この手引きで <code>propTypes</code>を紹介するのは、それが必須事項ではなくとも、<em>長い目で見ると多くの無駄を防ぐことになるから</em>です。そして私のニュースレターに登録するとダウンロードできる、Cheat Sheet（PDF）を印刷しておけば、より労力を軽減できます。話を元に戻します。ここまででデータを表示させる方法が分かりました。次に更新の仕方を学びましょう。</p><p><script src="https://app.convertkit.com/assets/CKJS4.js?v=18"></script></p><p>現状、私たちのアプリは静的データ一式を取り扱い、1度だけDOMへレンダリングします。しかし、データに変化がある場合には何が起こるのでしょうか。</p><p>Reactと呼ばれるツールにどのような期待をしようと、<em>何も</em>変わりません。他の多くのJavaScriptフレームワークの自動更新ビューとは異なり、Reactは手動でレンダリングの命令を出さなければなりません。その方法を説明します。</p><p>最初の<code>render</code>関数の呼び出しによって、全く新しいHTML要素のツリーが<code>#react-app</code>以下に作成されますが、2回目の呼び出しは<em>変更が生じたところのみの変更しか行いません。</em>これがパフォーマンスにおいてReactが好評価を得ている理由です。実際に次のことをしてみます。</p><p>2回目の<code>render</code>関数の呼び出しは<em>全く何も</em>しません。特別な<code>key</code>プロパティをそれぞれの要素の<em>配列</em>に指定してレンダリングしない限りは何もしません。なぜこうなのか理解するには<code>render</code>がどのように動くか少し知る必要があります。</p><p><code>ReactDOM.render</code>の最初の呼び出しは簡単です。<code>ReactElement</code>内で渡され、対応のHTMLツリーを<code>#react-app</code>の下に作成します。しかし上でも述べたように2回目以降の呼び出しでは、それ以前にレンダリングされたHTML要素は、対応する<code>ReactElement</code>オブジェクトに変更がない限り、更新されません。これはなぜなのでしょうか。</p><p><em>何</em>を変更するのかを決定する時、Reactは新しい<code>ReactElement</code>ツリーと前のツリーを比較します。その際に、いくつかの<a href="https://facebook.github.io/react/docs/reconciliation.html" rel="nofollow" title="" class="ext-link">ルール</a>に従います。</p><p>ただし、ここで注意すべき点が1つあります。Reactが同一の<code>type</code>と<code>prop</code>を持つ<code>ReactElement</code>の配列を見つけると、見た目は同一のようでも、本当に同一であるかは知ることはできません。例えば要素がuser focusプロパティを持っているか否かの場合のように、要素が内部状態を持つことができるからです。しかし、それぞれの要素の区別がつかなくなってしまうため、Reactがこれら要素を再度レンダリングすると問題が発生します。その結果、配列の順番が変更になったのか分からなくなってしまうのです。</p><p>前述の例の<code>key</code>プロパティはここで使用することになります。<code>key</code>プロパティはReactが要素を区別できるようにし、DOMと<code>ReactElement</code>のツリーを整列しておきます。</p><p>理論はこのくらいにして、実用的なことに移りましょう。</p><p>アプリにフォームを追加できるだけの知識が備わりました。ユーザインタラクションがなくてもいいのであれば、の話です。しかし、なぜこのような制約があるのでしょう。</p><p>Reactでは、input要素は特別のことではありません。<code>value</code>プロパティを取り、その<code>value</code>が何であるかを表示します。<em>コンポーネントが外部から渡されたプロパティを直接変更できないため、</em>ユーザ入力によって値の表示を変更してしまうことはありません。</p><p>少しこれを考えてみましょう。value属性をフォームに入力しても、<em>何も変わりません。</em>ただし、値を変えられないわけではありません。<code>input</code>イベントをリッスンして値を必要に応じて更新すれば好きな値に変更することができます。これについては後ほど触れます。</p><p><code>value</code>以外にもinput要素に持たせたいプロパティを持たせることが可能です。しかし、ちょっとした<a href="https://facebook.github.io/react/docs/tags-and-attributes.html" rel="nofollow" title="" class="ext-link">例外</a>がいくつかあります。HTML <code>&lt;input&gt;</code>に渡したい属性も<code>props</code>で提供されています。次の2つの例外は知っておくべきでしょう。</p><p>私の作成したReact Cheat Sheetに上の例外は記載されています。私のニュースレターに登録した人にお配りしています。</p><p>では、次の<code>propTypes</code>を持つ、新しい<code>ContactForm</code>のコンポーネントクラスを作成します。</p><p><code>&lt;form&gt;</code>要素をレンダリングすると、<code>name</code>や<code>email</code>が入力できる<code>&lt;input&gt;</code>要素が表示され、<code>description</code>が入力できる<code>&lt;textarea&gt;</code>が表示され、送信のための<code>&lt;button type="submit"&gt;</code>が表示されるはずです。複雑化を避けるためにもラベルの代わりにプレースホルダを使うといいでしょう。そして、Reactの<code>textarea</code>コンポーネントが<code>value</code>を<code>ｃhildren</code>としてではなく<code>props</code>として受け取ることを覚えておきましょう。</p><p><code>ContactForm</code>クラスを作成した後、<code>contact</code>プロパティとして渡される空白のコンタクトをコンタクトリストの下に追加してください。</p><p>できましたね。すばらしい。私の実装と比べてみてください。違いを見つけてほしいとは思いますが、私の実装に全ての行が一致する必要はないので、一致させることに固執しないでください。重要なのは動くものを書くことです。</p><p><iframe width="100%" height="300" src="//jsfiddle.net/adhrfmLy/embedded/result,js,html/" frameborder="0"></iframe></p><p>まだ記事を読み終わっていないのに、<em>すでに売る気満々です。</em>しかし、アプリの見た目が悪かったら誰も見向きもしません。そこで、ちょっとした<em>スタイル</em>を追加しましょう。</p><p>どうすればいいのでしょう。このアプリは小さいので、HTMLセレクタを使用してスタイルを付けること<em>も</em>できます。</p><p>しかし、別のリストを作ってしまうとアプリが動かなくなってしまいまので、後の苦労を避けるためにもクラスを指定しましょう。競合を避けるため、親コンポーネントのクラス名を名前空間に定義します。</p><p>ここでは、<code>ContactItem</code>コンポーネントは次のようになります。</p><p>
+</p>
+<p>コンポーネントの<code>render</code>関数の一部ではない<code>createElement</code>呼び出しでクラス名を取得するにはどうすればいいのでしょうか。</p><p>ほとんどのReact系のプロジェクトでは、<em>全て</em>がクラスによって組織化されています。1つの<code>React.createElement</code>を呼び出し、直接<code>ReactDOM.render</code>に渡されるトップレベルの要素をレンダリングします。このアプリでは、トップレベルの<code>ContactView</code>を次のシグネチャを使用しましょう。</p><p>新規アプリにスタイルを付けたい場合、<code>ContactView</code>を上で定義したとおりに作成して、<code>className</code>プロパティを必要に応じて追加して、さらにHTMLファイルにスタイルシートを追加します。</p><p>どのようにすればいいかヒントをあげましょう。fiddleを用意してみました。</p><p><iframe width="100%" height="300" src="//jsfiddle.net/adhrfmLy/1/embedded/result,js,css,html/" frameborder="0"></iframe></p><p><em>見た目の良い</em>アプリを作成するために知識は揃いました。しかし、インタラクティブにする方法はどのようにして学べばよいのでしょうか。</p><p>この記事は<em>生のReact</em>シリーズの第一弾です。毎週新しい記事を掲載予定です。Reactで<em>本物のアプリ</em>を実際に読者が作成するのに十分な情報を出せるまで書き続けます。本物のアプリの定義は次のとおりです。</p><p><em>最新情報</em>： <a href="http://jamesknelson.com/learn-raw-react-ridiculously-simple-forms/" rel="nofollow" title="" class="ext-link">Part 2: Ridiculously Simple Forms</a>を掲載しました。</p><p>emailアドレスをくれた方には、新しい記事を発表のタイミングでお送りします。さらに特典として<a href="http://jamesknelson.com/wp-content/uploads/2015/09/react-cheatsheet-thumbnail.png" rel="nofollow" title="" class="ext-link">React</a>、<a href="http://jamesknelson.com/wp-content/uploads/2015/09/es6-cheatsheet-thumbnail.png" rel="nofollow" title="" class="ext-link">ES6</a>、<a href="http://jamesknelson.com/wp-content/uploads/2015/09/promises-cheatsheet-thumbnail.png" rel="nofollow" title="" class="ext-link">JavaScriptのPromise</a>の3つの印刷用PDF Cheat Sheetを差し上げます。</p><p><script src="https://app.convertkit.com/assets/CKJS4.js?v=21"></script></p><p>
+<style type="text/css">
+.ck_form {
+background: #fff url(data:image/gif;base64,R0lGODlhAQADAIABAMzMzP///yH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MUQ5NjM5RjgxQUVEMTFFNEJBQTdGNTQwMjc5MTZDOTciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MUQ5NjM5RjkxQUVEMTFFNEJBQTdGNTQwMjc5MTZDOTciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxRDk2MzlGNjFBRUQxMUU0QkFBN0Y1NDAyNzkxNkM5NyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxRDk2MzlGNzFBRUQxMUU0QkFBN0Y1NDAyNzkxNkM5NyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAEAAAEALAAAAAABAAMAAAICRFIAOw==) repeat-y center top;
+font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+line-height: 1.5em;
+overflow: hidden;
+color: #666;
+font-size: 16px;
+border-top: solid 20px #3071b0;
+border-top-color: #b30e2f;
+border-bottom: solid 10px #3d3d3d;
+border-bottom-color: #5f0719;
+-webkit-box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+-moz-box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+box-shadow: 0px 0px 5px rgba(0,0,0,.3);
+clear: both;
+margin: 20px 0px;
+}
+.ck_form * {
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}</p>
+<h1 id="gfm-18">ck_subscribe_form {</h1>
+<p>clear: both;
+}
+.ck_form_content, .ck_form_fields {
+width: 50%;
+float: left;
+padding: 5%;
+}
+.ck_form.ck_horizontal {
+}
+.ck_form_content {
+border-bottom: none;
+}
+.ck_form.ck_vertical {
+background: #fff;
+}
+.ck_vertical .ck_form_content, .ck_vertical .ck_form_fields {
+padding: 10%;
+width: 100%;
+float: none;
+}
+.ck_vertical .ck_form_content {
+border-bottom: 1px dotted #aaa;
+overflow: hidden;
+}
+@media all and (max-width: 499px) {
+.ck_form {
+background: #fff;
+}
+.ck_form_content, .ck_form_fields {
+padding: 10%;
+width: 100%;
+float: none;
+}
+.ck_form_content {
+border-bottom: 1px dotted #aaa;
+}
+}
+.ck_form_content h3 {
+margin: 0px 0px 15px;
+font-size: 24px;
+padding: 0px;
+}
+.ck_form_content p {
+font-size: 14px;
+}
+.ck_image {
+float: left;
+margin-right: 5px;
+}
+.ck_errorArea {
+display: none;
+}</p>
+<h1 id="gfm-19">ck_success_msg {</h1>
+<p>padding: 10px 10px 0px;
+border: solid 1px #ddd;
+background: #eee;
+}
+.ck_label {
+font-size: 14px;
+font-weight: bold;
+}
+.ck_form input[type="text"], .ck_form input[type="email"] {
+font-size: 14px;
+padding: 10px 8px;
+width: 100%;
+border: 1px solid #d6d6d6; 
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px; 
+background-color: #f8f7f7; 
+margin-bottom: 5px;
+height: auto;
+}
+.ck_form input[type="text"]:focus, .ck_form input[type="email"]:focus {
+outline: none;
+border-color: #aaa;
+}
+.ck_checkbox {
+padding: 10px 0px 10px 20px;
+display: block;
+clear: both;
+}
+.ck_checkbox input.optIn {
+margin-left: -20px;
+margin-top: 0;
+}
+.ck_form .ck_opt_in_prompt {
+margin-left: 4px;
+}
+.ck_form .ck_opt_in_prompt p {
+display: inline;
+}
+.ck_form .ck_subscribe_button {
+width: 100%;
+color: #fff;
+margin: 10px 0px 0px;
+padding:  10px 0px;
+font-size: 18px;
+background: #b30e2f;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px; 
+cursor: pointer;
+border: none;
+text-shadow: none;
+}
+.ck_form .ck_guarantee {
+color: #626262;
+font-size: 12px;
+text-align: center;
+padding: 5px 0px;
+display: block;
+}
+.ck_form .ck_powered_by {
+display: block;
+color: #aaa;
+}
+.ck_form .ck_powered_by:hover {
+display: block;
+color: #444;
+}
+.ck_converted_content {
+display: none;
+padding: 5%;
+background: #fff;
+}
+</style>
+</p><p><em>注釈：役に立つ記事やCheat Sheet、コードをお送りします。決して大量の無駄な情報を送るようなことはしません。絶対に迷惑メールは送りません。</em></p><p>感想をぜひ教えてください。<a href="@james_k_nelson">@james_k_nelson</a>にツイートするか、 <a href="james@jamesknelson.com">james@jamesknelson.com</a>にメールしてください。読んでくださってありがとうございます。</p><p>関連リンク：</p>

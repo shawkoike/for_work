@@ -1,0 +1,28 @@
+<p><a href="http://jlord.us/essential-electron" rel="nofollow" title="" class="ext-link">Essential Electron</a> （2016-08） by <a href="https://twitter.com/jllord" rel="nofollow" title="" class="ext-link">Jessica Lord</a></p><p><small>(訳注：2016/12/14、画像リンクのミスを修正いたしました。)</small><br>
+<small>(訳注：2017/02/16、画像リンクのミスを修正いたしました。)</small></p><p>
+<style type="text/css" media="screen">.def, h3 + ul strong {color: #569efe;}</style>
+</p>
+<p>Electronは<span class="def">JavaScript、HTML、CSS</span>を使ってデスクトップアプリケーションを作ることができる<span class="def">ライブラリ</span>です。作ったアプリケーションはMac、Windows、Linuxで動かせます。</p><p>一般に、デスクトップアプリケーションは各オペレーティングシステムの<span class="def">ネイティブ言語</span>で書かれています。ということは、アプリケーション1つに、3つのバージョンを書く3つのチームが必要になるかもしれません。ElectronならばWebページ用の言語を使って、アプリケーションを1回作れば済みます。</p><p>Electronは<span class="def">Chromium</span>と<span class="def">Node.js</span>を、ファイルオープンのダイアログボックス、通知、アイコンなどといったOS固有の機能向けの一連のカスタム<span class="def">API</span>に、結びつけています。</p><p><img src="http://jlord.us/essential-electron/imgs/components.png" alt="Electron components"><br>
+<em>注釈:<br>
+Chromium／Webページ作成用<br>
+Node.js／ファイルシステムとネットワーク用<br>
+ネイティブAPI／3つのOS用</em></p><p>Electronによる開発は、シームレスに<span class="def">Nodeを利用</span>できるWebページを構築するようなものです。あるいは、HTMLやCSSでインターフェースを作成できるようなNodeのアプリケーションを構築するようなものと言えます。その上、<span class="def">単一のブラウザ</span>、つまり<span class="def">最新のChrome</span>だけに対して設計すればよいようになっています。</p><p>Electronには、WebサイトとJavaScriptという2つの構成要素があります。そのため、開発に着手する前に、その2つをよく知っておく必要があります。HTML、CSS、JavaScriptに関するチュートリアル等を確認して、自分のコンピュータにNodeをインストールしておいてください。</p><p>Electronには、メインとレンダラという2種類のプロセスがあります。そして、それぞれ、または両方のプロセスで稼働する<span class="def">モジュール</span>があります。レンダラプロセスが、アプリケーションにおける各ウィンドウであるのに対して、メインプロセスは、どちらかというと背後に隠れているプロセスです。</p><p>メインプロセス(一般的に、<code>main.js</code>という名前のファイルです)は、あらゆるElectronアプリケーションにおけるエントリーポイントとなります。オープンからクローズまで、アプリケーションの生命を管理します。メインプロセスはまた、<span class="def">ネイティブな要素を呼び出し</span>、それぞれの新たなレンダラプロセスをアプリケーション内に作成します。メインプロセスには完全なNode APIがビルトインされています。</p><p><img src="http://jlord.us/essential-electron/imgs/main.png" alt="main process diagram"></p><p><em>注釈：メインプロセス<br>
+取得する内容<br>
+* Node.js API<br>
+* Electronのメインプロセスモジュール</em></p><p>一般的なタスク<br>
+* レンダラプロセスの作成<br>
+* ネイティブな要素の呼び出し<br>
+* アプリケーションの開始と終了</p><p>レンダラプロセスは、アプリケーションにおけるブラウザウィンドウです。メインプロセスとは異なり、複数のプロセスの存在が可能で、<span class="def">それぞれが独立</span>しています。またレンダラプロセスは<span class="def">隠す</span>こともできます。通常レンダラプロセスは<code>index.html</code>という名前です。これは典型的なHTMLのファイルのようですが、Webブラウザとは異なり、Electronでは全てのNode APIを利用できます。</p><p><img src="http://jlord.us/essential-electron/imgs/renderer.png" alt="renderer process diagram"><br>
+<em><br>
+注釈：レンダラプロセス</em></p><p>取得する内容<br>
+* Node.ｊｓ API<br>
+* DOM API<br>
+* Electronレンダラプロセスモジュール</p><p>一般的なタスク：<br>
+* HTMLとCSSによってWebページを設計する<br>
+* JavaScriptページのインタラクション<br>
+</p><p>Chrome（または別のWebブラウザ）における各タブ・各Webページは、Electronにおけるレンダラプロセス1つに相当します。Chromeの全タブを閉じてもChromeが残っている状態がElectronのメインプロセスに似ていて、新しいウィンドウを開いたり、アプリケーションを終えたりすることができます。</p><p><img src="http://jlord.us/essential-electron/imgs/like-this.png" alt="Chrome comparison of the two processes"><br>
+<em><br>
+注釈：メインプロセス、レンダラプロセス<br>
+</em></p><p>メインプロセスとレンダラプロセスは、それぞれ違うタスクに責任を負っていることから、互いに通信可能であることが必要です。そのためにプロセス間通信（<span class="def">IPC</span>）があります。IPCを用いて、メインプロセスとレンダラプロセス間でメッセージをやり取りします。</p><p><img src="http://jlord.us/essential-electron/imgs/ipc.png" alt="IPC diagram"><br>
+<em>注釈：プロセス間でメッセージを送る</em></p><p>ElectronアプリケーションはNodeアプリケーションと同様に、<span class="def"><code>package.json</code>ファイル</span>を使います。そこでどのファイルがメインプロセスか、すなわち、どこでElectronにアプリケーションをスタートさせるかを定義させています。そしてメインプロセスはレンダラプロセスを作り、IPCを用いて2つのプロセス間でメッセージを送ることができます。</p><p><img src="http://jlord.us/essential-electron/imgs/app-files.png" alt="Electron app components diagram"><br>
+<em>注釈：1. アプリの開始ポイントを決める。2. アプリを起動し、レンダラプロセスを作成する。3. アプリのインターフェースをレイアウトし整える。4. IPCを用いてメインプロセスでタスクを実行し、情報を得る。</em></p><p>Electronクイックスタートリポジトリは<code>package.json</code>や<code>main.js</code>そして<code>index.html</code>による最小構成のElectronアプリです。ここで学んできたもので、取りかかりには最適です。また選択したフレームワークでテンプレート用のボイラープレートをチェックしておきましょう。</p><p>アプリをいったん構築したら、MacやWindowsあるいはLiux用に<span class="def">コマンドラインツール</span><code>electron-packager</code>でパッケージ化することができます。そのために<code>package.json</code>にスクリプトを加えます。以下でMacやWindowsのアプリケーションストアでアプリを得るためのリソースを確認してください。</p><p>ここでのコンセプトだけで十分、事足りるでしょうが、もちろんまだ学ぶべきことはあります。ここにさらに参考となる情報を記しておきます。</p>

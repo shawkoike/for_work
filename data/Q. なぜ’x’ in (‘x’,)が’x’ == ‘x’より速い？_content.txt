@@ -1,0 +1,1 @@
+Why is 'x' in ('x',) faster than 'x' == 'x'? （2015-03-05） asked by Markus Meskanen on stackoverflow条件を複雑にした場合も同様で、どちらも計算時間は線型的に増加するようです。これを考慮すると、全ての場合において==よりもinを使うようにしたほうがいいと思うんです。

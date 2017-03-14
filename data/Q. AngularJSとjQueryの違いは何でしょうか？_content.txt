@@ -1,0 +1,10 @@
+How is Angular Js different from jquery（2012-10-31）by Stack OverflowStack Overflowで人気のあったQAをご紹介します。私が知っているJavaScriptライブラリといえばjQueryです。
+しかし、新規プロジェクトのデフォルトのライブラリとして、プログラマ仲間がAngularJSを導入しました。私はAngularJSについての知識が全くありません。jQueryと何が違うのでしょうか。
+jQueryのタスクとして実行された関数群は、AngularJSでも使用できますか？jQueryはDOMのエレメントを操作・管理するための優れたツールです。WebアプリケーションのようなデータのCRUDがなく、DOMのエレメント操作についてのみ言えば、jQueryは最高のツールの一つです（AngularJSでも同様の操作が可能です）。AngularJSは以下の特徴を持つフレームワークです。このプレゼンテーション資料や、よくできた入門サイトもチェックしてみてください。
+公式の開発者ガイドを一読することもお忘れなく。
+または、こういったすばらしいチュートリアル映像などで学習してください。
+jQueryはAngularJSと問題なく併用することができます。
+jQueryは優れたツールであると言いましたが、AngularJS は内部にjQuery liteを組み込んでいます。FAQより&gt; Q. AngularJSでjQueryライブラリを使用できますか？
+&gt;
+&gt; A. はい。AngularJS起動時にjQueryがアプリケーション内にあれば利用可能です。
+&gt; jQueryがスクリプトのパスに無い場合、AngularはjQLiteと呼ばれるAngularJS組み込みであるjQueryのサブセットへ委譲します。ただし、jQueryによってDOMを変更する場合は、AngularJSのコントローラ内ではなく、ディレクティブ内で行ってください。

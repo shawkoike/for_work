@@ -1,0 +1,80 @@
+<p><a href="http://www.adriancourreges.com/blog/2016/09/09/doom-2016-graphics-study/" rel="nofollow" title="" class="ext-link">DOOM (2016) – Graphics Study</a> （2016-09-09） by <a href="https://twitter.com/ado_tan" rel="nofollow" title="" class="ext-link">Adrian Courrèges</a></p><p><img class="left" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/../doom_2016_logo.jpg"></p><p>去る1993年、『<a href="https://ja.wikipedia.org/wiki/DOOM" rel="nofollow" title="" class="ext-link">DOOM</a>』がゲームデザインやゲームメカニクスに根本的な変化をもたらしました。これは世界的な現象となり、<a href="https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A7%E3%83%B3%E3%83%BBD%E3%83%BB%E3%82%AB%E3%83%BC%E3%83%9E%E3%83%83%E3%82%AF" rel="nofollow" title="" class="ext-link">John Carmack</a>や<a href="https://en.wikipedia.org/wiki/John_Romero" rel="nofollow" title="" class="ext-link">John Romero</a>など、開発に関わった象徴的な存在の名声を広げました。</p><p>それから23年が経った現在、<a href="https://ja.wikipedia.org/wiki/Id_Software" rel="nofollow" title="" class="ext-link">id Software</a>は<a href="https://ja.wikipedia.org/wiki/%E3%82%BC%E3%83%8B%E3%83%9E%E3%83%83%E3%82%AF%E3%82%B9%E3%83%BB%E3%83%A1%E3%83%87%E3%82%A3%E3%82%A2" rel="nofollow" title="" class="ext-link">Zenimax</a>の傘下に入り、当初の創設者は会社から全員去りました。しかし、かつてid Softwareに属していたチームは最高のゲームを作り、変わらずに優秀であることを示しました。</p><p>この『<a href="https://en.wikipedia.org/wiki/Doom_(2016_video_game)" rel="nofollow" title="" class="ext-link">DOOM</a>』は非の打ちどころのないシリーズ最新作となりました。使用されている<a href="https://en.wikipedia.org/wiki/Id_Tech_6" rel="nofollow" title="" class="ext-link">id Tech 6 engine</a>については、元Crytekの社員だった<a href="https://twitter.com/idSoftwareTiago" rel="nofollow" title="" class="ext-link">Tiago Sousa</a>がJohn Carmackから引き継いだ部署のレンダラプログラマを率いて取り組んでいます。<br>
+歴史的には、id Softwareはエンジンをオープンソース化して数年で、そのエンジンで有名になりました。このエンジンは数多くの<a href="https://www.chocolate-doom.org/wiki/index.php/Chocolate_Doom" rel="nofollow" title="" class="ext-link">出来のいいリメーク</a>や<a href="http://fabiensanglard.net/doomIphone/doomClassicRenderer.php" rel="nofollow" title="" class="ext-link">分析</a>などへとつながったのです。今後もこの状態がid Tech 6 engineに当てはまるかは後にならなければ分かりません。しかし、エンジンに実装された素晴らしいグラフィックス技術を高く評価するために、ソースコードが必要とは限りません。</p><p>ゲームの冒頭で<em>プラエトルスーツ</em>を手に入れた直後に、<em><a href="http://doom.wikia.com/wiki/The_Possessed_(Enemy)" rel="nofollow" title="" class="ext-link">ポゼスド</a></em>という敵が守る<em><a href="http://doom.wikia.com/wiki/Gore_nest" rel="nofollow" title="" class="ext-link">ゴアネスト</a></em>をプレーヤーが攻撃する以下の場面を検証してみましょう。</p><p><img class="center" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/99_final.jpg"><br>
+近年公開されている大半のWindowsゲームとは異なり、DOOMでは<a href="https://ja.wikipedia.org/wiki/Direct3D" rel="nofollow" title="" class="ext-link">Direct3D</a>を使わずに<a href="https://ja.wikipedia.org/wiki/OpenGL" rel="nofollow" title="" class="ext-link">OpenGL</a>や<a href="https://ja.wikipedia.org/wiki/Vulkan_(API)" rel="nofollow" title="" class="ext-link">Vulkan</a>のバックエンドを提供しています。<br>
+Vulkanが新しい流行のAPIとなり、最近になって<a href="https://twitter.com/baldurk" rel="nofollow" title="" class="ext-link">Baldur Karlsson</a>が<a href="https://github.com/baldurk/renderdoc" rel="nofollow" title="" class="ext-link">RenderDoc</a>内にVulkanのサポートを追加したため、DOOMも必然的にVulkanを取り入れることとなりました。次の所見は、全てをUltraに設定した<a href="https://en.wikipedia.org/wiki/GeForce_900_series" rel="nofollow" title="" class="ext-link">GTX 980</a>上でVulkanを使って実行しているゲームに基づいていますが、中には推測や<a href="http://advances.realtimerendering.com/s2016/Siggraph2016_idTech6.pdf" rel="nofollow" title="" class="ext-link">Tiago SousaとJean GeffroyがSiggraphで発表した内容</a>からの抜粋も含まれます。</p><p>最初のステップは<a href="https://en.wikipedia.org/wiki/Id_Tech_4#MegaTexture_rendering_technology" rel="nofollow" title="" class="ext-link">メガテクスチャ</a>のアップデートです。これは<a href="https://en.wikipedia.org/wiki/Rage_(video_game)" rel="nofollow" title="" class="ext-link">RAGE</a>で使われた<a href="https://ja.wikipedia.org/wiki/Id_TECH5" rel="nofollow" title="" class="ext-link">id TECH 5</a>に既に存在する技術で、今ではDOOMでも使われています。<br>
+それぞれが128×128タイルのセットである数個の大きなテクスチャ（DOOMの場合は16k×8k）をGPUメモリに割り当てるというのが、とても基本的な考え方です。</p><p><img src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/05_megatext_illus.jpg" style="display: block; margin: auto;  "><br>
+128×128ページある16k×8kのストレージ</p><p>これらのタイルは全て、適切なミップマップレベルにおける実際のテクスチャの理想的なセットを示しているはずです。注目されている一部分を表示するために、後でピクセルシェーダはミップマップレベルを必要とします。ピクセルシェーダが”仮想テクスチャ”から読み取る際は、最終的に単純に128×128の物理的タイルからの読み取ることになります。<br>
+当然ですが、プレーヤーがどこを見ているかにより、このセットは変化し、画面上に新しいモデルが表示されます。他の仮想テクスチャを参照することで、新しいタイルが入り、古いタイルは出て行くはずです。<br>
+フレームの最初で実際のテクスチャデータをGPUメモリに加えるために、DOOMは<code>vkCmdCopyBufferToImage</code>を通して幾つかのタイルをアップデートします。</p><p><em>メガテクスチャに関する詳細は<a href="http://www.mrelusive.com/publications/papers/Software-Virtual-Textures.pdf" rel="nofollow" title="" class="ext-link">こちら</a>と<a href="http://s09.idav.ucdavis.edu/talks/05-JP_id_Tech_5_Challenges.pdf" rel="nofollow" title="" class="ext-link">こちら</a>をご覧ください。</em></p><p>それぞれの光が影を投じるために、固有の<a href="https://en.wikipedia.org/wiki/Depth_map" rel="nofollow" title="" class="ext-link">深度マップ</a>が生成され、巨大な8k×8kの<a href="https://en.wikipedia.org/wiki/Texture_atlas" rel="nofollow" title="" class="ext-link">テクスチャアトラス</a>の中の1つのタイルに保存されます。しかし、各フレームの各深度マップが全て計算されるわけではありません。DOOMでは以前のフレームの計算結果を再利用し、アップデートの必要がある深度マップのみを再生成します。</p><p><img src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/10_light_depth__zommed_illu_0.png" style="display: block; margin: auto;  " class="img-nobox"><br>
+<img src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/10_light_depth__zommed_illu_1.png" style="display: block; margin: auto;  " class="img-nobox"><br>
+<em>8k×8kの深度バッファ<br>
+（前のフレーム）<br>
+8k×8kの深度バッファ<br>
+（現在のフレーム）</em></p><p>ライトが静的で影が静的なオブジェクトにしか落ちないとしたら、不必要な再計算をせずに、そのままの深度マップを単純に保持するのは納得できます。しかし、数体の敵がライトの下を動いているとしたら、再度、深度マップを生成しなければいけません。<br>
+深度マップのサイズは、カメラからライトの距離にも大きく左右されるため、再生成された深度マップはアトラス内の同じタイルの中に留まるとは限りません。<br>
+DOOMは、深度マップの静的な部分をキャッシュし、動的なメッシュの投影のみを計算し、結果を構成するというような、特別な最適化機能を備えています。</p><p>これで、深度の情報が深度マップに出力され、不明瞭なメッシュは全てレンダリングされます。最初はプレーヤーの武器、次に静的なジオメトリ、そして動的なジオメトリという順番です。</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/11_depth_map_0.png" width="950" height="534"><br>
+深度マップ：進捗率20％</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/11_depth_map_1.png" width="950" height="534"><br>
+深度マップ：進捗率40％</p><p><img style="-webkit-user-select: none; cursor: zoom-out;" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/11_depth_map_2.png" width="950" height="534"><br>
+深度マップ：進捗率60％</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/11_depth_map_3.png" width="950" height="534"><br>
+深度マップ：進捗率80％</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/11_depth_map_4.png" width="950" height="534"><br>
+深度マップ：進捗率100％</p><p>しかし実際には、深度プレパスの間に出力される情報は深度だけではありません。<br>
+動的なオブジェクト（<em>ポゼスド</em>、ケーブル、プレーヤーの武器）が深度マップにレンダリングされる間にピクセル単位の速度も計算され、それが他のバッファに書き込まれてベロシティ（速度）マップが生成されます。これは頂点シェーダ内の計算によって行われ、以前のフレームと現在のフレームの間の各頂点の位置の差が測定されます。</p><p><strong>ベロシティマップ</strong></p><p>ベロシティマップ</p><p>速度を格納するのに必要なのは2つのチャネルだけです。赤は水平軸に沿った速さで、緑が垂直軸に沿った速さです。<br>
+<em>ポゼスド</em>は素早くプレーヤーに向かってきていますが（緑）、武器はほとんど動いていません（黒）。<br>
+黄色の（赤と緑の両方が1に等しい）領域は何でしょうか。実はバッファのもともとのデフォルトの色で、これまで動的メッシュに触れられていないということを示しています。全て<em>“静的メッシュ領域”</em>です。<br>
+なぜDOOMでは静的メッシュに対する速度の計算を省いているのでしょうか。それは、静的なピクセル速度は、深度や、最後のフレーム以降のプレーヤーのカメラの新しい状態から簡単に推測できるので、メッシュごとに計算する必要がないからです。<br>
+ベロシティマップは、後で<a href="https://ja.wikipedia.org/wiki/%E3%83%A2%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%96%E3%83%A9%E3%83%BC" rel="nofollow" title="" class="ext-link">モーションブラー</a>を適用する際に役に立つでしょう。</p><p><strong>ボックステスト<br>
+赤：遮られている<br>
+緑：見えている</strong><br>
+<img src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/13_occ_quer.png" style="display: block; margin: auto;  "></p><p>私たちはできるだけ小さなジオメトリを送ってGPUにレンダリングを行いたいと考えます。それを達成するための最善策は、プレーヤーからは直接見えないメッシュを全てえり分けることです。DOOMでのオクルージョンカリングのほとんどは<a href="http://umbra3d.com/knee-deep-in-the-dead/" rel="nofollow" title="" class="ext-link">Umbraミドルウェア</a>を介して行われますが、それでもまだ、見えている領域のセットをさらにスリム化するために、エンジンによる<em>GPUオクルージョンクエリ</em>が行われます。</p><p>では、GPUオクルージョンクエリの背後にある考えは何でしょうか。<br>
+最初のステップでは、ワールドにある複数のメッシュをそれら全てを取り囲む仮想ボックスにグループ化し、GPUに現在の深度バッファに対してこのボックスのレンダリングを行うよう要求します。ラスタライズされたピクセルがどれも深度テストにパスしない場合、そのボックスは完全に遮られていて、ボックス内部にある全てのワールドオブジェクトはレンダリング時に安全に省略されるということになります。<br>
+問題は、これらのオクルージョンクエリ結果はすぐには利用できませんが、誰もクエリ上でブロックしてGPUパイプラインをストールしたくはないということです。通常、結果の読み込みは次のフレームで後から行われるので、オブジェクトが飛び出るのを防ぐために少し保守的なアルゴリズムが必要です。</p><p>不透明なジオメトリとデカールは全てレンダリングされているものとします。ライティング情報はfloat型のHDRバッファに格納されています。<br>
+<img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/20_light_0.jpg" width="950" height="534"><br>
+ライティング 25%</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/20_light_1.jpg" width="950" height="534"><br>
+ライティング 50%</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/20_light_2.jpg" width="950" height="534"><br>
+ライティング 75%</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/20_light_3.jpg" width="950" height="534"><br>
+ライティング 100%</p><p>深度テスト機能は無駄なオーバードロー計算を防ぐために<code>EQUAL</code>に設定され、前述の深度プリパスのおかげで、各ピクセルが持つことになっている深度値が正確に分かっています。<br>
+デカールもメッシュのレンダリングが行われる際に直接適用され、テクスチャアトラスに格納されます。</p><p>もうこれで良さそうに見えますが、ガラスのような透明なマテリアルやパーティクルがまだです。まだ環境反射が全くありません。</p><p>このパスについて少し言及すると、使用されるのは<a href="http://www.humus.name/Articles/PracticalClusteredShading.pdf" rel="nofollow" title="" class="ext-link">Emil Person</a>と<a href="http://www.cse.chalmers.se/~uffe/clustered_shading_preprint.pdf" rel="nofollow" title="" class="ext-link">Ola Olsson</a>の仕事の影響で生み出されたクラスタ化されたフォワードレンダラです。<br>
+歴史的に、フォワードレンダリングの弱点の1つは多数のライトを処理することができないことで、もっとやりやすい方法で後から処理されます。<br>
+それでは、クラスタ化されたレンダラはどのように動作するのでしょうか。<br>
+まず、あなたがビューポートをタイル状に分割すると、DOOMは16×8のサブディビジョンを作成します。ここでやめて、タイルごとにライトのリストを計算するレンダラもあるでしょう。それはライティングの計算量を減らすのに役立ちますが、それでも何らかのエッジケースに悩まされます。</p><p><strong>クラスタ化されたカメラの視錐台</strong><br>
+<a href="http://postd.cc/wp/wp-content/uploads/2016/10/f81fd2e4c52864042852c112ce927ae2.png"><img src="http://postd.cc/wp/wp-content/uploads/2016/10/f81fd2e4c52864042852c112ce927ae2.png" alt="%e3%83%80%e3%82%a6%e3%83%b3%e3%83%ad%e3%83%bc%e3%83%89" width="801" height="421" class="alignleft size-full wp-image-8198"></a><br>
+クラスタ化されたレンダリングによって、その概念はさらに進み、2Dから3Dへ発展します。つまり、2Dビューポートを再分割した時点でやめずに、実際にZ軸に沿ってスライスを作成してカメラの視錐台全体の3D再分割を行います。</p><p>各”ブロック”は”クラスタ”と呼ばれます。あるいは、”錐台状の”<a href="https://ja.wikipedia.org/wiki/%E3%83%9C%E3%82%AF%E3%82%BB%E3%83%AB" rel="nofollow" title="" class="ext-link">ボクセル</a>とも呼ばれています。<br>
+右の図は、シンプルな4×2のビューポートサブディビジョンを視覚化したもので、5つの深度スライスで錐台を40のクラスタに分割しています。</p><p>DOOMでは、カメラの視錐台は3072のクラスタ（16×8×24のサブディビジョン）に分割され、深度スライスはZ軸に沿って対数的に配置されています。</p><p>クラスタ化されたレンダラを使った典型的なフローは以下のとおりです。</p><p>ここで、ピクセルシェーダが、このパスの間に、ライトとデカールのリストを実際にどうやって取り出せるのかを見てみましょう。</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/21_cluster_0.jpg" width="950" height="533"><br>
+ライトとデカールの適用＃１<br>
+<em>注釈：<br>
+Cluster List：クラスタリスト</em></p><p>Item Offset (32b)：アイテムオフセット（32b）<br>
+Light Count (8b)：ライトカウント（8b）<br>
+Decal Count (8b)：デカールカウント（8b）<br>
+Probe Count (8b)：プローブカウント（8b）</p><p>Item List：アイテムリスト</p><p>Light Index (12b)：ライトインデックス（12b）<br>
+Decal Index (12b)：デカールインデックス（12b）</p><p>Light Parameters：ライトパラメータ</p><p>Decal Parameters：デカールパラメータ</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/21_cluster_1.jpg" width="950" height="533"></p><p><em>注釈：<br>
+ピクセルのワールドスペース上の位置に基づくリスト上のクラスタ検索</em><br>
+ライトとデカールの適用 #2</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/21_cluster_2.jpg" width="950" height="533"><br>
+<em>注釈：<br>
+オフセット1からアイテムリストを検索して、3つのライトインデックスを読み込む</em><br>
+ライトとデカールの適用 #3</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/21_cluster_3.jpg" width="950" height="533"><br>
+<em>注釈：<br>
+インデックスからライトをフェッチして適用する</em><br>
+ライトとデカールの適用 #4</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/21_cluster_4.jpg" width="950" height="533"><br>
+<em>注釈：<br>
+オフセット1からアイテムリストを検索して、2つのデカールトインデックスを読み込む</em><br>
+ライトとデカールの適用 #5</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/21_cluster_5.jpg" width="950" height="533"><br>
+<em>注釈：<br>
+インデックスからデカールをフェッチして適用する</em><br>
+ライトとデカールの適用 #6</p><p>全く同じやり方でアクセスされるプローブリスト（上図には示されていません）もあります。しかし、そのリストはこのパスでは使われないので、その話は後にしましょう。<br>
+将来的にGPU上で、どれほど劇的にレンダリング計算の複雑さを軽減できるのかを考えると、CPU上でクラスタごとにアイテムのリストを事前生成するオーバーヘッドは、かけるだけの価値が十分あります。<br>
+クラスタ化されたフォワードレンダリングは、最近、若干の注目を集めています。基本的なフォワードレンダリングよりももっと多くのライトを扱う精密な特性を有すると同時に、幾つかのG-Buffer（ジオメトリバッファ）に対する書き込み、読み込みをしなければならないディファードレンダリングよりも速いという特性を持っています。</p><p>しかし、まだ触れていなかったことがあります。私たちが調べたこのパスは、ただ単にライトバッファに書き込むというフォワードレンダリングではありません。それが実行されている間に<a href="https://en.wikipedia.org/wiki/Multiple_Render_Targets" rel="nofollow" title="" class="ext-link">MRT</a>を使って、2つのわずかなG-Buffersも生成されました。</p><p>法線マップ</p><p><img src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/23_specular.jpg" style="display: block; margin: auto;  "><br>
+スペキュラマップ<br>
+法線マップは、R16G16（赤16ビット、緑16ビット）のfloat型で格納されます。スペキュラマップはR8G8B8A8（赤、緑、青、アルファ各8ビット）です。アルファチャンネルは滑らかさの要素を含みます。<br>
+そこで、DOOMは実際にフォワードレンダリングとディファードレンダリングをハイブリッドアプローチでうまく調和させました。反射のような付加効果を実行するとき、これらの拡張G-Buffersは何かと便利です。</p><p>そして、最も忘れてはいけないのは、メガテクスチャシステムのための160×120のフィードバックバッファも、同時に生成されることです。ミップマップのレベルがどのテクスチャに流れ込むべきかをストリーミングシステムに伝えるための情報を含みます。<br>
+メガテクスチャエンジンは、反応性の高い動きをします。つまり、あるテクスチャが抜け落ちているというレンダーパスからのレポートを受け取ると、そのエンジンがテクスチャをロードします。</p><p><a href="https://www.opengl.org/wiki/Compute_Shader" rel="nofollow" title="" class="ext-link">Compute Shader</a>は、位置、速度、寿命といったパーティクルシミュレーションを更新するようにディスパッチされます。<br>
+それはパーティクルの現在の状態のみならず、（衝突の検知のために）法線バッファと深度バッファを読み込みます。そして、シミュレーションステップを進め、バッファに新しい状態を戻して格納します。</p><p>SSAOマップ</p><p>このステップで、今度は<a href="https://en.wikipedia.org/wiki/Screen_space_ambient_occlusion" rel="nofollow" title="" class="ext-link">SSAO</a>マップが生成されます。<br>
+狭い境界や折り目などの周りで色を暗くすることが目的です。<br>
+遮へいされたメッシュ上に現れる、鮮明な光によるーティファクトを避けるために<a href="http://research.tri-ace.com/Data/cedec2011_RealtimePBR_Implementation_e.pptx" rel="nofollow" title="" class="ext-link">スペキュラオクルージョン</a>を適用するのにも使われます。<br>
+深度バッファ、法線マップ、スペキュラマップから読み込むピクセルシェーダでもともとの解像度半分と算出されます。<br>
+最初に得られる結果は、ノイズの多いものになります。</p><p>今度はピクセルシェーダがSSRマップを生成します。これは、スクリーン上に現れている情報だけを使い、ビューポートの各ピクセル上で光線を反射させ、反射光があたるピクセルの色を読んで、反射をレイトレースします。</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/11_depth_map_4.png" width="950" height="534"><br>
+深度</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/22_normal.jpg"><br>
+法線</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/23_specular.jpg"><br>
+スペキュラ</p><p><img style="-webkit-user-select: none" src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/23_previous.jpg"><br>
+前のフレーム</p><p><img class="center img-nobox" src="http://www.adriancourreges.com/img/arrow-down.png" style="height: 3.0em; margin-bottom: -1em; margin-top: -0.5em;"></p><p><img src="http://www.adriancourreges.com/img/blog/2016/doom2016/shot/25_ssr.jpg" style="display: block; margin: auto;  "><br>
+SSRマップ</p><p>シェーダの入力は、深度マップ（ピクセルのワールドスペースの位置を計算するため）、法線マップ（光線を反射させる方法を知るため）、スペキュラマップ（反射の”量”を知るため）、（透明処理後ではなくトーンマッピング前のステージで）レンダリングされた<em>前のフレーム</em>（幾つかの色情報を持つため）です。前のフレームのカメラコンフィギュレーションは、それがフラグメントの位置変化の経過を追うことができるように、ピクセルシェーダにも提供されます。</p><p>各シーンにおいて一定のコストで発生するリアルタイムのダイナミックリフレクションを備えるなら、SSRは優れた技術で、それほど高価ではありません。また没入感や臨場感を出すのにとても有効な手段です。<br>
+しかし、完全にスクリーンスペースの中で作業し、”グローバルな”情報が欠如しているという事実のために、それ自身が生み出すアーティファクトがつきものです。そのため、あなたはあるシーンで、素晴らしい反射を見ているかもしれません。しかし下の方を見るにつれ、反射の量が減少し、自分の足元を見る時には、反射が全く無くなります。DOOMのSSRは効果的に統合されていると思います。視覚的な質は改善しましたが、実際に集中して見ていなければ、アーティファクトが消えていることに気がつきかないほどかすかなものです。</p>

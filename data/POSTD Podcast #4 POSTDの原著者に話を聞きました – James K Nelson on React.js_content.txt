@@ -1,0 +1,1 @@
+Yosuke Furukawa(@yosuke_furukawa), James K Nelson(@james_k_nelson)とKei Sawada(@remore)の3人がReact.jsとそのエコシステム、Node.jsとの出会い、オーストラリアから見た日本、コンポーネント志向、Reactでのレンダリング時間の課題とパフォーマンス最適化のアプローチ、Microservices志向とアプリケーションロジックの行方、react-routerの課題感などについて話しました。

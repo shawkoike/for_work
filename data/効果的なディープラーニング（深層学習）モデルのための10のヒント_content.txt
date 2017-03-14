@@ -1,0 +1,2 @@
+10 Tips for Better Deep Learning Models（2014-07-17）by Laura Diane HamiltonLaura Diane Hamilton: Additive Analytics社のCEOであり創設者でもある。経歴ディープラーニングとは、階層型ニューラルネットワーク(バックプロパゲーションを用いた確率的勾配降下法による教師あり学習)を指します。
+彼は、堅牢なディープラーニングモデルを開発するための以下のヒントを与えてくれました。Arnoのスライドはこちらでご覧になれます。

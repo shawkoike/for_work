@@ -1,0 +1,36 @@
+RxJava recipe: Convert any Android event into a stream (2016-08-29) by Sebastian Lobato Gencoまず、これから解決していく問題を先に述べます。イベント（例えばOSの通知やBluetoothの状態）を受け取る部分がアプリ内に複数あり、各部分に関係がある時にのみその情報を受け取りたい場合を想像してみてください。今回の記事では、RxJavaの様々なコンポーネントを組み合わせることで、この問題を解決する道を探ろうと思います。本題に入る前に、SubjectやReplay、そしてConnectable Observablesなどのコンセプトを理解しておいてください。今回の記事は、各コンポーネントのニュアンスを理解するのに役立つと思います。ここで、例え話を使って問題を示してみます。
+画像著作者：vectomart – Fotolia次のような機能を持つ自動サウンドシステムがリビングリームにあるとしましょう。解決策は（クッキングレシピの要領で）順を追って紹介し、具材を追加する理由や、それぞれが解決しようとしている問題を説明していきます。RxJavaの最初の具材はRxRelayのBehaviorRelay（またの名を安全なBehaviorSubject）です。これは今回の料理完成に必要な機能の大半をカバーするもので、購読/停止イベントを提供し、Hot Observableと同じように複数のobserverに対してマルチキャストし、前回に発行された値を新しいobserverにリプレイします。この具材を準備する手順は以下のとおりです。
+画像著作者：reactivex.io仕組み自体はこれで大丈夫そうですが、1つだけ問題があります。それはObservableを新たに購読する度にListenerに余分な登録が行われ、Observableの購読を停止する度に、たとえ他にも多数のobserverが依然としてObservableを購読中でも、Listenerから余分な登録解除が行われてしまうことです。つまり、このレシピは並列する複数のobserverには使えないということになります。
+上記のコードは次の出力を生成します。BehaviorRelayProblem -&gt; observer-1 subscribes
+BehaviorRelayProblem -&gt; doOnSubscribe
+BehaviorRelayProblem -&gt; observer-1 -&gt; onNext with 1
+BehaviorRelayProblem -&gt; observer-2 subscribes
+BehaviorRelayProblem -&gt; doOnSubscribe &lt;= 問題：不要な呼び出し
+BehaviorRelayProblem -&gt; observer-2 -&gt; onNext with 1
+BehaviorRelayProblem -&gt; observer-1 -&gt; onNext with 2
+BehaviorRelayProblem -&gt; observer-2 -&gt; onNext with 2
+BehaviorRelayProblem -&gt; observer-1 unsubscribes
+BehaviorRelayProblem -&gt; doOnUnsubscribe &lt;= 問題：不要な呼び出し
+BehaviorRelayProblem -&gt; observer-2 unsubscribes
+BehaviorRelayProblem -&gt; doOnUnsubscribeこの問題に対するシンプルな対策はBehaviorRelayにshare()オペレータを組み合わせることです。これによりソースのObservableのdoOnSubscribe()メソッドは、最初のobserverがストリームを購読した時に1回だけ呼び出され、同様にdoOnUnsubscribe()は、最後のobserverがストリームの購読を停止した時に1回だけ呼び出されます。
+画像著作者：Netflixオリジナル作品上記のコードは次の出力を生成します。share -&gt; observer-1 subscribes
+share -&gt; doOnSubscribe
+share -&gt; observer-1 -&gt; onNext with 1
+share -&gt; observer-2 subscribes
+&lt;= 問題：呼び出しがない “observer-2 -&gt; onNext with 1”
+share -&gt; observer-1 -&gt; onNext with 2
+share -&gt; observer-2 -&gt; onNext with 2
+share -&gt; observer-1 unsubscribes
+share -&gt; observer-2 unsubscribes
+share -&gt; doOnUnsubscribe完成にかなり近づいていますが、あと一歩です。上記では2番目のobserverが購読した際、そのobserverは新しいイベントが発行されるまで何の値も取得できません。新たなobserverが購読をする時、それ以前のobserverに対してイベントは発行済みであることを考慮すると、新しいobserverに前回の値をすぐに発行できた方がいいでしょう。この問題の答えは.share()をRxReplayingShareに置き換えることです。これでリプレイのキャッシュはReplayingShareオブジェクトの一部となるため、BehaviorRelayではなくPublishRelayを使うことになります。
+画像著作者：Jake Wharton 2016年
+上記のコードは次の出力を生成します。ReplayingShare -&gt; observer-1 subscribes
+ReplayingShare -&gt; doOnSubscribe
+ReplayingShare -&gt; observer-1 -&gt; onNext with 1
+ReplayingShare -&gt; observer-2 subscribes
+ReplayingShare -&gt; observer-2 -&gt; onNext with 1
+ReplayingShare -&gt; observer-1 -&gt; onNext with 2
+ReplayingShare -&gt; observer-2 -&gt; onNext with 2
+ReplayingShare -&gt; observer-1 unsubscribes
+ReplayingShare -&gt; observer-2 unsubscribes
+ReplayingShare -&gt; doOnUnsubscribeこの方法が適用できるのは、例えばサービスによって生成されたイベントにアプリの一部が関係する時にのみ実行する必要があるようなAndroidのサービスで、それが誰も関心を持たなくなるまで要素を生成し続けた後、シャットダウンするような場合です。個人的に、この問題を解決するために他の人がどういうレシピでRxJavaのコンポーネントを組み合わせるかというのにとても興味があります。RxJavaの具材を別のやり方でミックスしても、同様の結果を得ることはできるはずです。同じ結果にたどり着く別の調理法があれば、ぜひコメントでお聞かせください。グルメ向けのコツ：最近導入されたObservable.fromEmitter()は、Listenerのregister/unregisterのユースケースをカバーするために設計されており、ここで述べた問題もfromAsyncで解決して同様の結果を得ることが可能です。

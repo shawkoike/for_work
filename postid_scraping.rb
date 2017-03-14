@@ -23,7 +23,7 @@ article_category = Hash.new
 file = File.open('url.txt', "w")
 
 # 終了ページまで
-num.upto(1) do
+num.upto(58) do
   str = "http://postd.cc/page/#{num}/"
   html = Nokogiri::HTML(open(str))
   dummy = html.css('.block-entry-title > a ,.tagcloud')
