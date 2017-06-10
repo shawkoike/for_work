@@ -3,7 +3,7 @@
 Standalone<br>
  
 	<!-- Begin Video.js -->
-	<video id="example_video_id_1947721065" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
+	<video id="example_video_id_403616451" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
 		<source src="http://christinacacioppo.com/videos/standalone.mp4" type="video/mp4"></source>
 		
 		
@@ -13,7 +13,7 @@ Standalone<br>
 Fizzbuzz<br>
  
 	<!-- Begin Video.js -->
-	<video id="example_video_id_1263744432" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
+	<video id="example_video_id_862677673" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
 		<source src="http://christinacacioppo.com/videos/fizzbuzz.mp4" type="video/mp4"></source>
 		
 		
@@ -22,7 +22,7 @@ Fizzbuzz<br>
 </p><p>初めの頃、コンピュータの概念はその能力を使って人間の知力を向上させるためのものでした。しかし、一部のコード学習の取り組みはあまり初心者向けではないようでした。問題解決よりも入力することに重きが置かれ、その”問題”というのは変数の名前や値のスワップを扱うものでした。例えば誰かに単一行のテキストボックス内におけるテキストの再入力や編集をお願いしてみてください。彼らは素早くこなすでしょうが、その作業自体は退屈なものです。しかし、ツールを利用してパズルを解くようにお願いすれば、学習は価値のあるものになるでしょう。それがFizzBuzzのような自明なものであっても例外ではありません。</p><p>自転車に乗ったことのない初心者は補助輪を欲しがりません。求めるのは乗ることができる自転車です。これと似たように、効果的な初心者用のエディタはないと思います。あるのはプログラマが使用し、初心者でも理解できるエディタです。</p><p>残念なことにほとんどのエディタはあまり良い性能ではなく使用法も簡単ではありません。それらの標準的なインターフェースはコマンドラインから借りてきたもので、使いやすくも寛大でもありません。そして何がコードとテキストを区別しているのか教えてもくれません。実際に必要とされるのは高性能で使いやすいエディタです。</p><p>誰でも使いやすく、学習者でも分かりやすいエディタをいくつか紹介します。これら全てのデモは私が作った環境で実行しますが、同じ原理をあらゆる所で適用することが出来るでしょう。</p><p>Snippets<br>
  
 	<!-- Begin Video.js -->
-	<video id="example_video_id_1497744987" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
+	<video id="example_video_id_1175401138" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
 		<source src="http://christinacacioppo.com/videos/snippets.mp4" type="video/mp4"></source>
 		
 		
@@ -31,7 +31,7 @@ Fizzbuzz<br>
 </p><p>すぐに必要なツールを見つけ出せます。それらは種類別ではなく動作別にグループ分けされています。なぜならプログラムを組む上での考え方に近いからです。</p><p>見て分かるようにクリックするとサンプルテキストがエディタに挿入されます。（オートコンプリートで挿入されたスニペットも同じように動作します。）プレースホルダ内のテキストは開始場所を教えてくれます。それによりどのように使用するかを知ることが出来ます。</p><p>Repl<br>
  
 	<!-- Begin Video.js -->
-	<video id="example_video_id_446382467" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
+	<video id="example_video_id_1846327426" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
 		<source src="http://christinacacioppo.com/videos/repl.mp4" type="video/mp4"></source>
 		
 		
@@ -40,7 +40,7 @@ Fizzbuzz<br>
 </p><p>エディタに入力するか、コードスニペットを使用すると、そのコードはREPLに読み込まれます。REPLとエディタにおける相互作用によって、より洗練されたコードが入力できるようになります。これは非常に便利で、使えるまでに待つ必要もありません。そしてこの方法で入力したコードを検査することができます。これは他の方法では不可能なことです。</p><p>Hovers<br>
  
 	<!-- Begin Video.js -->
-	<video id="example_video_id_1849425984" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
+	<video id="example_video_id_362200247" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
 		<source src="http://christinacacioppo.com/videos/hovers.mp4" type="video/mp4"></source>
 		
 		
@@ -49,7 +49,7 @@ Fizzbuzz<br>
 </p><p>エディタにある全ての単語はマウスカーソルを当てることで説明文が表示されます。これによりコードの理解をより深められます。そのため言語の用法ではなく実際のプログラミングの構想に集中することができます。無口だったエディタが役に立つガイドに変わります。そしてそれはあまりプログラミングに馴染みのない人々にとって特に有効です。しかし、これは正式な説明とはなりません。仮にstaticメソッドについて聞いたことがないのに、それを使用しなければならなくなった場合、この機能による説明ではおそらく不十分です。ですが、膨大な難しくて混乱を招く使用法の説明を読むよりもこの機能による説明のほうが学び始めるものとしてはより有効です。</p><p>Varexplorer<br>
  
 	<!-- Begin Video.js -->
-	<video id="example_video_id_480793703" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
+	<video id="example_video_id_951640409" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
 		<source src="http://christinacacioppo.com/videos/varexplorer.mp4" type="video/mp4"></source>
 		
 		
@@ -58,7 +58,7 @@ Fizzbuzz<br>
 </p><p>生徒たちにとって特に厄介だった2つの概念が”変数”と”変数スコープ”です。これまでの環境では<a href="http://cs-blog.khanacademy.org/2013/09/teaching-variables-analogies-and.html" rel="nofollow" title="" class="ext-link">変数ボックス</a>や<a href="http://stackoverflow.com/questions/11820952/eclipse-ide-scope-highlighting" rel="nofollow" title="" class="ext-link">背景に色を付けたメソッド</a>を使用していましたが、私の経験上、どちらも適切ではありませんでした。恐らく、エクスプローラに変数を直接表示する方法が最も分かりやすいのではないでしょうか。そうすることで、表示されているヘッダから環境が変数と値をトラッキングでき、計算処理はコンピュータに委ねられます。</p><p>Compilerish<br>
  
 	<!-- Begin Video.js -->
-	<video id="example_video_id_1292190081" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
+	<video id="example_video_id_2063663890" class="video-js vjs-default-skin" width="640" height="264" controls preload="none" data-setup="[]">
 		<source src="http://christinacacioppo.com/videos/compilerish.mp4" type="video/mp4"></source>
 		
 		

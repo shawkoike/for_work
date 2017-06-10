@@ -2,6 +2,7 @@
 titles = Array.new()
 File.open('./data/titles.txt') do |f|
   while title = f.gets do
+    puts title
     titles << title.chomp.to_s
   end
 end

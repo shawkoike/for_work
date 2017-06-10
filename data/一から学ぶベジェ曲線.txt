@@ -1,13 +1,349 @@
-<p><a href="http://jamie-wong.com/post/bezier-curves/" rel="nofollow" title="" class="ext-link">Bezier Curves from the Ground Up</a> （2016-12-29） by <a href="http://jamie-wong.com/" rel="nofollow" title="" class="ext-link">Jamie Wong</a></p><p><em>(編注：SVGアニメーションについては<a href="http://jamie-wong.com/post/bezier-curves/" rel="nofollow" title="" class="ext-link">元記事</a>で動作をご確認ください。)</em></p><p>皆さんは線分のことをどう表現しますか？　線分は、端点によって考えられるかもしれません。その端点を<em><strong>P0</strong></em>、<em><strong>P1</strong></em>と呼ぶことにしましょう。<br>
+<p><a href="http://jamie-wong.com/post/bezier-curves/" rel="nofollow" title="" class="ext-link">Bezier Curves from the Ground Up</a> （2016-12-29） by <a href="http://jamie-wong.com/" rel="nofollow" title="" class="ext-link">Jamie Wong</a></p><p><em>(編注：SVGアニメーションを元記事にならい追加しました。リクエストありがとうございました。)</em></p><p>皆さんは線分のことをどう表現しますか？　線分は、端点によって考えられるかもしれません。その端点を<em><strong>P0</strong></em>、<em><strong>P1</strong></em>と呼ぶことにしましょう。<br>
 <img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier1-1024x357.png" alt="d_bezier1" width="770" height="268" class="alignnone size-large wp-image-9362"></p><p>線分を厳密に定義するならば、「<em><strong>P0</strong></em>と<em><strong>P1</strong></em>を結ぶ直線において、<em><strong>P0</strong></em>と<em><strong>P1</strong></em>の間にある全ての点の集合」と言えるかもしれません。これは以下のように表せるでしょう。<br>
-<img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier2-1024x115.png" alt="d_bezier2" width="770" height="86" class="alignnone size-large wp-image-9364"></p><p>便利なことに、上記の定義から、その線分上のどこにある点の座標でも簡単に求めることができます。例えば、中点は<em><strong>L(0.5)</strong></em>にあります。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier3.jpg" alt="d_bezier3" width="1015" height="541" class="alignleft size-full wp-image-9317"></p><p>実は、2点間のどんな値でも、任意の精度で<em>線形補間する</em>ことが可能です。そのため、時間関数<em><strong>L(t)</strong></em>の<em><strong>t</strong></em>で線をたどるといった、より複雑なことができるのです。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier12-1024x418.png" alt="d_bezier12" width="770" height="314" class="alignnone size-large wp-image-9365"></p><p>ここまで来ると、「それが曲線と何の関係があるのか？」と不思議に思うかもしれません。2つの点だけで正確に線分を描けるということは、かなり直感的に理解できそうです。では、以下の曲線を正確に描くにはどうすればよいでしょうか？</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier4.jpg" alt="d_bezier4" width="995" height="203" class="alignleft size-full wp-image-9320"></p><p>このような<em>独特な</em>曲線も、3つの点だけで描くことができるとわかります！</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier5.jpg" alt="d_bezier5" width="990" height="275" class="alignleft size-full wp-image-9321"></p><p>これは2次ベジェ曲線と呼ばれます。この複雑な帽子をかぶっているかのような曲線を得るための線分は1次ベジェ曲線と言えるかもしれません。その理由を見てみましょう。</p><p>まず、<em><strong>P0</strong></em>と<em><strong>P1</strong></em>を補間すると同時に<em><strong>P1</strong></em>と<em><strong>P2</strong></em>を補間するとどんな形になるか考えてみましょう。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier13-1024x546.png" alt="d_bezier13" width="770" height="411" class="alignnone size-large wp-image-9368"></p><p>それでは、<em><strong>B0,1(t)</strong></em>と<em><strong>B1,2(t)</strong></em>の線形補間を行ってみると…</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier14-1024x478.png" alt="d_bezier14" width="770" height="359" class="alignnone size-large wp-image-9367"></p><p><em><strong>B0,1,2(t)</strong></em>の等式は<em><strong>B0,1</strong></em>と<em><strong>B1,2</strong></em>の等式にそっくりなことに注目してください。<em><strong>B0,1,2(t)</strong></em>のパスをたどるとどうなるか見てみましょう。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier15-1024x329.png" alt="d_bezier15" width="770" height="247" class="alignnone size-large wp-image-9372"></p><p>先ほどの曲線になりました！</p><p><a href="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier6.jpg"><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier6.jpg" alt="d_bezier6" width="999" height="295" class="alignleft size-full wp-image-9322"></a></p><p>2本の1次ベジェ曲線を補間すると2次ベジェ曲線が得られるのと同様に、2本の<span style="color:#2F80ED">2次ベジェ曲線</span>を補間すると<span style="color:#9B51E0">3次ベジェ曲線</span>が得られます。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier16-1024x458.png" alt="d_bezier16" width="770" height="344" class="alignnone size-large wp-image-9370"></p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier7.jpg" alt="d_bezier7" width="1019" height="293" class="alignleft size-full wp-image-9323"></p><p>ここで、厄介な再帰的定義が含まれているのではないかと内心疑問が湧くかもしれません。実は、そのとおりなのです。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier17-1024x131.png" alt="d_bezier17" width="770" height="99" class="alignnone size-large wp-image-9371"></p><p>TypeScriptで（簡潔ですが効率の悪い形で）表すと、以下のようになるでしょう。</p><p>偶然にも3次ベジェ曲線は、単純さと正確さのバランスがうまく取れているので、様々な用途に役立つようです。<a href="https://www.figma.com/" rel="nofollow" title="" class="ext-link">Figma</a>のようなベクタ編集ツールで最もよく使われるタイプの曲線です。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier8.jpg" alt="d_bezier8" width="767" height="430" class="alignleft size-full wp-image-9324"><br>
+<img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier2-1024x115.png" alt="d_bezier2" width="770" height="86" class="alignnone size-large wp-image-9364"></p><p>便利なことに、上記の定義から、その線分上のどこにある点の座標でも簡単に求めることができます。例えば、中点は<em><strong>L(0.5)</strong></em>にあります。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier3.jpg" alt="d_bezier3" width="1015" height="541" class="alignleft size-full wp-image-9317"></p><p>実は、2点間のどんな値でも、任意の精度で<em>線形補間する</em>ことが可能です。そのため、時間関数<em><strong>L(t)</strong></em>の<em><strong>t</strong></em>で線をたどるといった、より複雑なことができるのです。</p><p><svg preserveaspectratio="xMinYMin meet" viewbox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M50 50 L550 150" stroke="black" stroke-width="2"></path>
+<path d="M50 50 L50 50" stroke="#EB5757" stroke-width="2" id="p1"></path><g transform="translate(50, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">0</tspan></text></g><g transform="translate(550, 150)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">1</tspan></text></g><g transform="translate(50, 50)" id="Lg1"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="-20" y="30" id="Lt1">L(0.5)</text></g></svg></p><p><script>
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    var x0 = 50;
+    var y0 = 50;
+    var x1 = 550;
+    var y1 = 150;
+    var Lg1 = document.getElementById("Lg1");
+    var Lt1 = document.getElementById("Lt1");
+    var p1 = document.getElementById("p1");
+    (function next() {
+        t += dt;
+        if (t < 0 || t > 1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var x = x0 + t * (x1 - x0);
+        var y = y0 + t * (y1 - y0);
+        Lg1.setAttribute("transform",  "translate(" + x + "," + y + ")");
+        Lt1.innerHTML = "L(" + t.toFixed(2) + ")";
+        p1.setAttribute("d", "M50 50 L" + x.toFixed(2) + " " + y.toFixed(2));
+        requestAnimationFrame(next);
+    })();
+})();
+</script></p><p>ここまで来ると、「それが曲線と何の関係があるのか？」と不思議に思うかもしれません。2つの点だけで正確に線分を描けるということは、かなり直感的に理解できそうです。では、以下の曲線を正確に描くにはどうすればよいでしょうか？</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier4.jpg" alt="d_bezier4" width="995" height="203" class="alignleft size-full wp-image-9320"></p><p>このような<em>独特な</em>曲線も、3つの点だけで描くことができるとわかります！</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier5.jpg" alt="d_bezier5" width="990" height="275" class="alignleft size-full wp-image-9321"></p><p>これは2次ベジェ曲線と呼ばれます。この複雑な帽子をかぶっているかのような曲線を得るための線分は1次ベジェ曲線と言えるかもしれません。その理由を見てみましょう。</p><p>まず、<em><strong>P0</strong></em>と<em><strong>P1</strong></em>を補間すると同時に<em><strong>P1</strong></em>と<em><strong>P2</strong></em>を補間するとどんな形になるか考えてみましょう。</p><p><svg id="quad1" preserveaspectratio="xMinYMin meet" viewbox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M50 50 L550 150" fill="none" stroke="black" stroke-width="1" stroke-dasharray="1, 2"></path>
+<path d="M550 150 L 550 50" fill="none" stroke="black" stroke-width="1" stroke-dasharray="1, 2"></path>
+<path d="" fill="none" stroke="#EB5757" stroke-width="1" class="p01"></path>
+<path d="" fill="none" stroke="#EB5757" stroke-width="1" class="p12"></path><g transform="translate(50, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">0</tspan></text></g><g transform="translate(550, 150)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">1</tspan></text></g><g transform="translate(550, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">2</tspan></text></g><g transform="translate(50, 50)" class="gB01"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="-20" y="30">B<tspan baseline-shift="sub" font-size="70%">0,1</tspan>(<tspan class="t01">0.00</tspan>)</text></g><g transform="translate(550, 150)" class="gB12"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="-90" y="0">B<tspan baseline-shift="sub" font-size="70%">1,2</tspan>(<tspan class="t12">0.00</tspan>)</text></g></svg></p><p><script>
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    var x0 = 50;
+    var y0 = 50;
+    var x1 = 550;
+    var y1 = 150;
+    var x2 = 550;
+    var y2 = 50;
+    var quad1 = document.getElementById("quad1");
+    var gB01 = quad1.querySelector(".gB01");
+    var gB12 = quad1.querySelector(".gB12");
+    var t01 = quad1.querySelector(".t01");
+    var t12 = quad1.querySelector(".t12");
+    var p01 = quad1.querySelector(".p01");
+    var p12 = quad1.querySelector(".p12");
+    (function next() {
+        t += dt;
+        if (t < 0 || t > 1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var x01 = x0 + t * (x1 - x0);
+        var y01 = y0 + t * (y1 - y0);
+        gB01.setAttribute("transform",  "translate(" + x01 + "," + y01 + ")");
+        t01.innerHTML = t.toFixed(2);
+        p01.setAttribute("d", "M" + x0 + " " + y0 + " L" + x01.toFixed(2) + " " + y01.toFixed(2));
+        var x12 = x1 + t * (x2 - x1);
+        var y12 = y1 + t * (y2 - y1);
+        gB12.setAttribute("transform",  "translate(" + x12 + "," + y12 + ")");
+        t12.innerHTML = t.toFixed(2);
+        p12.setAttribute("d", "M" + x1 + " " + y1 + " L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        requestAnimationFrame(next);
+    })();
+})();
+</script></p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier131-1024x170.png" alt="d_bezier13" width="770" height="128" class="aligncenter size-large wp-image-9620"></p><p>それでは、<em><strong>B0,1(t)</strong></em>と<em><strong>B1,2(t)</strong></em>の線形補間を行ってみると…</p><p><svg id="quad2" preserveaspectratio="xMinYMin meet" viewbox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M50 50 L550 150" fill="none" stroke="black" stroke-width="1" stroke-dasharray="1, 2"></path>
+<path d="M550 150 L 550 50" fill="none" stroke="black" stroke-width="1" stroke-dasharray="1, 2"></path>
+<path d="" fill="none" stroke="#EB5757" stroke-width="1" class="p01"></path>
+<path d="" fill="none" stroke="#EB5757" stroke-width="1" class="p12"></path>
+<path d="" fill="none" stroke="black" stroke-width="0.5" class="p012"></path>
+<path d="" fill="none" stroke="#27AE60" stroke-width="1.5" class="pB012"></path><g transform="translate(50, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">0</tspan></text></g><g transform="translate(550, 150)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">1</tspan></text></g><g transform="translate(550, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">2</tspan></text></g><g transform="translate(50, 50)" class="gB01"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle></g><g transform="translate(550, 150)" class="gB12"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle></g><g transform="translate(550, 150)" class="gB012"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="-20" y="30">B<tspan baseline-shift="sub" font-size="70%">0,1,2</tspan>(<tspan class="t012">0.00</tspan>)</text></g></svg></p><p><script>
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    var x0 = 50;
+    var y0 = 50;
+    var x1 = 550;
+    var y1 = 150;
+    var x2 = 550;
+    var y2 = 50;
+    var quad = document.getElementById("quad2");
+    var gB01 = quad.querySelector(".gB01");
+    var gB12 = quad.querySelector(".gB12");
+    var gB012 = quad.querySelector(".gB012");
+    var p01 = quad.querySelector(".p01");
+    var p12 = quad.querySelector(".p12");
+    var p012 = quad.querySelector(".p012");
+    var pB012 = quad.querySelector(".pB012");
+    var t012 = quad.querySelector(".t012");
+    (function next() {
+        t += dt;
+        if (t < 0 || t > 1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var x01 = x0 + t * (x1 - x0);
+        var y01 = y0 + t * (y1 - y0);
+        gB01.setAttribute("transform",  "translate(" + x01 + "," + y01 + ")");
+        p01.setAttribute("d", "M" + x0 + " " + y0 + " L" + x01.toFixed(2) + " " + y01.toFixed(2));
+        var x12 = x1 + t * (x2 - x1);
+        var y12 = y1 + t * (y2 - y1);
+        gB12.setAttribute("transform",  "translate(" + x12 + "," + y12 + ")");
+        p12.setAttribute("d", "M" + x1 + " " + y1 + " L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        var x012 = x01 + t * (x12 - x01);
+        var y012 = y01 + t * (y12 - y01);
+        t012.innerHTML = t.toFixed(2);
+        gB012.setAttribute("transform",  "translate(" + x012 + "," + y012 + ")");
+        pB012.setAttribute("d", "M" + x01.toFixed(2) + " " + y01.toFixed(2) + " " +
+                                "L" + x012.toFixed(2) + " " + y012.toFixed(2));
+        p012.setAttribute("d", "M" + x01.toFixed(2) + " " + y01.toFixed(2) + " " +
+                               "L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        requestAnimationFrame(next);
+    })();
+})();
+</script></p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier141-1024x102.png" alt="d_bezier14" width="770" height="77" class="aligncenter size-large wp-image-9621"></p><p><em><strong>B0,1,2(t)</strong></em>の等式は<em><strong>B0,1</strong></em>と<em><strong>B1,2</strong></em>の等式にそっくりなことに注目してください。<em><strong>B0,1,2(t)</strong></em>のパスをたどるとどうなるか見てみましょう。</p><p><svg id="quad3" preserveaspectratio="xMinYMin meet" viewbox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+<path d="M50 50 Q550 150 550 50" fill="none" stroke="#2F80ED" stroke-width="2" class="curve" stroke-dasharray="100%"></path>
+<path d="M50 50 L550 150" fill="none" stroke="black" stroke-width="1" stroke-dasharray="1, 2"></path>
+<path d="M550 150 L 550 50" fill="none" stroke="black" stroke-width="1" stroke-dasharray="1, 2"></path>
+<path d="" fill="none" stroke="#EB5757" stroke-width="1" class="p01"></path>
+<path d="" fill="none" stroke="#EB5757" stroke-width="1" class="p12"></path>
+<path d="" fill="none" stroke="black" stroke-width="0.5" class="p012"></path>
+<path d="" fill="none" stroke="#27AE60" stroke-width="1.5" class="pB012"></path><g transform="translate(50, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">0</tspan></text></g><g transform="translate(550, 150)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">1</tspan></text></g><g transform="translate(550, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">2</tspan></text></g><g transform="translate(50, 50)" class="gB01"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle></g><g transform="translate(550, 150)" class="gB12"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle></g><g transform="translate(550, 150)" class="gB012"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle></g></svg></p><p><script>
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    var x0 = 50;
+    var y0 = 50;
+    var x1 = 550;
+    var y1 = 150;
+    var x2 = 550;
+    var y2 = 50;
+    var quad = document.getElementById("quad3");
+    var gB01 = quad.querySelector(".gB01");
+    var gB12 = quad.querySelector(".gB12");
+    var gB012 = quad.querySelector(".gB012");
+    var p01 = quad.querySelector(".p01");
+    var p12 = quad.querySelector(".p12");
+    var p012 = quad.querySelector(".p012");
+    var pB012 = quad.querySelector(".pB012");
+    var curve = quad.querySelector(".curve");
+    var curveLength = curve.getTotalLength();
+    curve.setAttribute("stroke-dasharray", curveLength);
+    (function next() {
+        t += dt;
+        if (t < 0 || t > 1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var x01 = x0 + t * (x1 - x0);
+        var y01 = y0 + t * (y1 - y0);
+        gB01.setAttribute("transform",  "translate(" + x01 + "," + y01 + ")");
+        p01.setAttribute("d", "M" + x0 + " " + y0 + " L" + x01.toFixed(2) + " " + y01.toFixed(2));
+        var x12 = x1 + t * (x2 - x1);
+        var y12 = y1 + t * (y2 - y1);
+        gB12.setAttribute("transform",  "translate(" + x12 + "," + y12 + ")");
+        p12.setAttribute("d", "M" + x1 + " " + y1 + " L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        var x012 = x01 + t * (x12 - x01);
+        var y012 = y01 + t * (y12 - y01);
+        gB012.setAttribute("transform",  "translate(" + x012 + "," + y012 + 
+        ")");
+        pB012.setAttribute("d", "M" + x01.toFixed(2) + " " + y01.toFixed(2) + " " +
+                                "L" + x012.toFixed(2) + " " + y012.toFixed(2));
+        p012.setAttribute("d", "M" + x01.toFixed(2) + " " + y01.toFixed(2) + " " +
+                               "L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        curve.setAttribute("d", "M" + x0 + " " + y0 + " " +
+                                "Q" + x01 + " " + y01 + " " + x012 + " " + y012);
+        requestAnimationFrame(next);
+    })();
+})();
+</script></p><p>先ほどの曲線になりました！</p><p><a href="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier6.jpg"><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier6.jpg" alt="d_bezier6" width="999" height="295" class="alignleft size-full wp-image-9322"></a></p><p>2本の1次ベジェ曲線を補間すると2次ベジェ曲線が得られるのと同様に、2本の<span style="color:#2F80ED">2次ベジェ曲線</span>を補間すると<span style="color:#9B51E0">3次ベジェ曲線</span>が得られます。</p><p><svg id="cubic1" preserveaspectratio="xMinYMin meet" viewbox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+<path class="line" d="M50 50" fill="none" stroke="black" stroke-width="1"></path>
+<path class="line-prog" d="M50 50" fill="none" stroke="#27AE60" stroke-width="1"></path>
+<path class="p012" d="M50 50 Q50 150 550 50" fill="none" stroke="#2F80ED" stroke-width="2"></path>
+<path class="p123" d="M50 150 Q550 50 550 150" fill="none" stroke="#2F80ED" stroke-width="2"></path>
+<path class="p0123" d="M50 50 C50 150 550 50 550 150" fill="none" stroke="#9B51E0" stroke-width="3"></path><g transform="translate(50, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">0</tspan></text></g><g transform="translate(50, 150)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">1</tspan></text></g><g transform="translate(550, 50)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">2</tspan></text></g><g transform="translate(550, 150)"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle><text font-family="KaTeX_Math" x="0" y="-12">P<tspan baseline-shift="sub" font-size="70%">3</tspan></text></g><g transform="translate(50, 50)" class="g012"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle></g><g transform="translate(50, 150)" class="g123"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle></g><g transform="translate(50, 50)" class="g0123"><circle cx="0" cy="0" fill="white" r="4" stroke="black" stroke-width="2"></circle></g></svg></p><p><script>
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    function B(P) {
+        function _B(P, k, n, t) {
+            if (k == n) return P[n];
+            var left = _B(P, k, n-1, t);
+            var right = _B(P, k+1, n, t);
+            return [
+                (1-t) * left[0] + t * right[0],
+                (1-t) * left[1] + t * right[1]
+            ];
+        }
+        return function(t) {
+            return _B(P, 0, P.length-1, t);
+        }
+    };
+    var P = [
+        [50, 50],
+        [50, 150],
+        [550, 50],
+        [550, 150]
+    ];
+    // It's silly and pretty inefficient to this like this, but *shrug*!
+    var B0123 = B(P);
+    var B012 = B(P.slice(0, 3));
+    var B123 = B(P.slice(1, 4));
+    var B01 = B(P.slice(0, 2));
+    var B12 = B(P.slice(1, 3));
+    var B23 = B(P.slice(2, 4));
+    var cubic = document.getElementById("cubic1");
+    var p012 = cubic.querySelector(".p012");
+    var p123 = cubic.querySelector(".p123");
+    var p0123 = cubic.querySelector(".p0123");
+    var g012 = cubic.querySelector(".g012");
+    var g123 = cubic.querySelector(".g123");
+    var g0123 = cubic.querySelector(".g0123");
+    var line = cubic.querySelector(".line");
+    var lineProg = cubic.querySelector(".line-prog");
+    (function next() {
+        t += dt;
+        if (t < 0 || t > 1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var P0123 = B0123(t);
+        var P012 = B012(t);
+        var P123 = B123(t);
+        var P01 = B01(t);
+        var P12 = B12(t);
+        var P23 = B23(t);
+        g0123.setAttribute("transform", "translate(" + P0123[0] + "," + P0123[1] + ")");
+        g012.setAttribute("transform", "translate(" + P012[0] + "," + P012[1] + ")");
+        g123.setAttribute("transform", "translate(" + P123[0] + "," + P123[1] + ")");
+        p012.setAttribute("d", "M" + P[0][0] + " " + P[0][1] +
+                              " Q" + P01[0] + " " + P01[1] +
+                               " " + P012[0] + " " + P012[1]);
+        p123.setAttribute("d", "M" + P[1][0] + " " + P[1][1] +
+                              " Q" + P12[0] + " " + P12[1] +
+                               " " + P123[0] + " " + P123[1]);
+        p0123.setAttribute("d", "M" + P[0][0] + " " + P[0][1] +
+                               " C" + P01[0] + " " + P01[1] +
+                                " " + P012[0] + " " + P012[1] +
+                                " " + P0123[0] + " " + P0123[1]);
+        line.setAttribute("d", "M" + P012[0] + " " + P012[1] +
+                               " " + P123[0] + " " + P123[1]);
+        lineProg.setAttribute("d", "M" + P012[0] + " " + P012[1] +
+                                   " " + P0123[0] + " " + P0123[1]);
+        requestAnimationFrame(next);
+    })();
+})();
+</script></p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier161-1024x82.png" alt="d_bezier16" width="770" height="62" class="aligncenter size-large wp-image-9622"></p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier7.jpg" alt="d_bezier7" width="1019" height="293" class="alignleft size-full wp-image-9323"></p><p>ここで、厄介な再帰的定義が含まれているのではないかと内心疑問が湧くかもしれません。実は、そのとおりなのです。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier17-1024x131.png" alt="d_bezier17" width="770" height="99" class="alignnone size-large wp-image-9371"></p><p>TypeScriptで（簡潔ですが効率の悪い形で）表すと、以下のようになるでしょう。</p><p>偶然にも3次ベジェ曲線は、単純さと正確さのバランスがうまく取れているので、様々な用途に役立つようです。<a href="https://www.figma.com/" rel="nofollow" title="" class="ext-link">Figma</a>のようなベクタ編集ツールで最もよく使われるタイプの曲線です。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier8.jpg" alt="d_bezier8" width="767" height="430" class="alignleft size-full wp-image-9324"><br>
 <em><a href="https://www.figma.com/" rel="nofollow" title="" class="ext-link">Figma</a>での3次ベジェ曲線</em></p><p>2つの塗り潰された丸<span style="color: #2EC1FF">●</span>は<em><strong>P0</strong></em>と<em><strong>P3</strong></em>、2つのひし形<span style="color: #2EC1FF">◇</span>は<em><strong>P1</strong></em>と<em><strong>P2</strong></em>だと考えてください。これらは、さらに複雑な曲線ベクタを構成する基本要素です。</p><p>フォントグリフは、TrueType（.ttf）フォントのベジェ曲線によって指定されます。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier9.jpg" alt="d_bezier9" width="589" height="675" class="alignnone size-full wp-image-9325"><br>
 <em>3次ベジェ曲線の<a href="https://medium.com/figma-design/introducing-vector-networks-3b877d2b864f#.95e6iz9he" rel="nofollow" title="" class="ext-link">vector network</a>として表現された、<a href="http://ja.fonts2u.com/free-serif-italic.%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88" rel="nofollow" title="" class="ext-link">Free Serif Italic</a>の小文字の「e」</em></p><p>Scalable Vector Graphics（.svg）ファイルのフォーマットは、ベジェ曲線を2つの<a href="https://developer.mozilla.org/ja/docs/Web/SVG/Tutorial/Paths#.E3.83.99.E3.82.B8.E3.82.A7.E6.9B.B2.E7.B7.9A" rel="nofollow" title="" class="ext-link">曲線プリミティブ</a>の1つとして使います。曲線プリミティブは、以下の画像の広範囲で使われています。</p><p><img src="http://jamie-wong.com/images/ghostscripttiger.svg" style="width: 400px"><br>
-<em>SVGフォーマットの<a href="https://en.wikipedia.org/wiki/Talk%3AGhostscript#Origin_of_tiger.eps.3F_.28aka_.22cubic_spline_tiger.22.29" rel="nofollow" title="" class="ext-link">3次スプラインの虎</a></em></p><p>ベジェ曲線は、空間的曲線の表現に使われるのはもちろんですが、量間の曲線的関係の表現に使われても何ら不思議はありません。例えば、<em><strong>x</strong></em>と<em><strong>y</strong></em>の関係を示すのではなく、<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/single-transition-timing-function#Keywords_for_common_timing-functions" rel="nofollow" title="" class="ext-link">CSSのトランジションタイミング関数</a>は時間の割合が出力値の割合と関連しています。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier18-1024x282.png" alt="d_bezier18" width="770" height="212" class="alignnone size-large wp-image-9376"><br>
-<em>ベジェ曲線で定義されたトランジションタイミング関数</em></p><p>3次ベジェ曲線は、CSSでタイミング関数を表現する2つの方法のうちの1つです（もう1つは<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/single-transition-timing-function#The_steps()_class_of_timing-functions" rel="nofollow" title="" class="ext-link">steps()</a>）。CSSのタイミング関数における<code>cubic-bezier(x1, y1, x2, y2)</code>の記法は、3次ベジェ曲線の<em><strong>P1</strong></em>と<em><strong>P2</strong></em>の座標を指定するものです。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier10.jpg" alt="d_bezier10" width="619" height="520" class="alignnone size-full wp-image-9326"><br>
+<em>SVGフォーマットの<a href="https://en.wikipedia.org/wiki/Talk%3AGhostscript#Origin_of_tiger.eps.3F_.28aka_.22cubic_spline_tiger.22.29" rel="nofollow" title="" class="ext-link">3次スプラインの虎</a></em></p><p>ベジェ曲線は、空間的曲線の表現に使われるのはもちろんですが、量間の曲線的関係の表現に使われても何ら不思議はありません。例えば、<em><strong>x</strong></em>と<em><strong>y</strong></em>の関係を示すのではなく、<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/single-transition-timing-function#Keywords_for_common_timing-functions" rel="nofollow" title="" class="ext-link">CSSのトランジションタイミング関数</a>は時間の割合が出力値の割合と関連しています。</p><p>
+<style>
+.linear {
+    transition: all 1s linear;
+}
+.ease {
+    transition: all 1s cubic-bezier(0.75, 0.0, 0.75, 0.9);
+}
+.ease.end {
+    transition: all 1s ease;
+}
+.ease-in {
+    transition: all 1s ease-out;
+}
+.ease-in.end {
+    transition: all 1s ease-in;
+}
+.ease-in-out {
+    transition: all 1s ease-in-out;
+}
+.ease-out {
+    transition: all 1s ease-in;
+}
+.ease-out.end {
+    transition: all 1s ease-out;
+}
+.custom-ease {
+    transition: all 1s cubic-bezier(0.5, 1, 0.5, 0);
+}
+.ball.end {
+    transform: translateY(-100px);
+}
+.timeline {
+    transition: transform 1s linear;
+}
+.timeline.end {
+    transform: translateX(100px);
+}
+</style>
+</p><p>
+<figure><svg id="anim0" preserveaspectratio="xMinYMin meet" viewbox="0 0 600 150" xmlns="http://www.w3.org/2000/svg"><g transform="translate(50, 25)"><circle class="ball linear" cx="0" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g><g transform="translate(150, 25)"><circle class="ball ease" cx="0" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g><g transform="translate(250, 25)"><circle class="ball ease-in" cx="0" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g><g transform="translate(350, 25)"><circle class="ball ease-in-out" cx="0" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g><g transform="translate(450, 25)"><circle class="ball ease-out" cx="0" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g><g transform="translate(550, 25)"><circle class="ball custom-ease" cx="0" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g></svg></figure>
+</p><p><em>ベジェ曲線で定義されたトランジションタイミング関数</em></p><p>3次ベジェ曲線は、CSSでタイミング関数を表現する2つの方法のうちの1つです（もう1つは<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/single-transition-timing-function#The_steps()_class_of_timing-functions" rel="nofollow" title="" class="ext-link">steps()</a>）。CSSのタイミング関数における<code>cubic-bezier(x1, y1, x2, y2)</code>の記法は、3次ベジェ曲線の<em><strong>P1</strong></em>と<em><strong>P2</strong></em>の座標を指定するものです。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier10.jpg" alt="d_bezier10" width="619" height="520" class="alignnone size-full wp-image-9326"><br>
 <code>transition-timing-function: cubic-bezier(x1, y1, x2, y2)</code>のグラフ<br>
 Portion of CSS Property Value：CSSプロパティ値の割合<br>
-Portion of Time：時間の割合</p><p>オレンジ色のボールが動いているアニメーションを作成したいとしましょう。以下全てのグラフにおいて、<span style="color: #EB5757">赤色の線</span>は一定速度での時間の動きを表しています。<br>
-<img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier19-1024x632.png" alt="d_bezier19" width="770" height="475" class="alignnone size-large wp-image-9377"></p><p>ベジェ曲線は、曲線を描くのに役立つ美しい抽象概念です。最もよく使われる形態である3次ベジェ曲線は、曲線を描いて格納するという問題を4つの座標を格納するという問題に変えます。</p><p>効率面での利点の他に、4つの制御点を曲線形の上に移すと直感的に理解しやすくなり、直接操作エディタに適したものとなります。</p><p>点の2つは曲線の端点となっているので、多くのベジェ曲線を使ってさらに複雑な構造を正確に作り上げることが容易になります。端点が正確に指定されることは、アニメーションの場合は常に大変便利です。イージング関数では、<em><strong>t=0%</strong></em>の時は初期値、<em><strong>t=100%</strong></em>の時は最終値なのです。</p><p>少し気づきにくい利点は、<em><strong>P0</strong></em>と<em><strong>P1</strong></em>を結ぶ線が、<em><strong>P0</strong></em>から出る曲線の接線になっているということです。このため、点対称の制御点を持つ2本の接続した曲線がある場合、接続点の傾きは両側で同じになることが保証されます。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier11.jpg" alt="d_bezier11" width="693" height="365" class="alignleft size-full wp-image-9327"><br>
+Portion of Time：時間の割合</p><p>オレンジ色のボールが動いているアニメーションを作成したいとしましょう。以下全てのグラフにおいて、<span style="color: #EB5757">赤色の線</span>は一定速度での時間の動きを表しています。</p><p><svg id="anim1" preserveaspectratio="xMinYMin meet" viewbox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"><g transform="translate(25, 30)"><text font-size="70%" x="50" y="-16" text-anchor="middle">linear</text><g class="timeline">
+<path d="M0 0 L0 100" stroke="#EB5757" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path></g>
+<path d="M0 100 L 100 0" stroke="black" stroke-width="2" fill="none"></path><circle cx="0" cy="100" fill="white" r="4" stroke-width="2" stroke="black"></circle><g transform="translate(0, 100)"><text font-size="70%" x="10" y="0" alignment-baseline="middle">(0.00, 0.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><g transform="translate(100, 0)"><text font-size="70%" x="-10" y="0" alignment-baseline="middle" text-anchor="end">(1.00, 1.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><circle cx="100" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle><g class="ball linear">
+<path d="M130 100 L 0 100" stroke="#F2994A" stroke-width="1" stroke-dasharray="1, 2"></path><circle cx="130" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g></g><g transform="translate(225, 30)"><text font-size="70%" x="50" y="-16" text-anchor="middle">ease</text><g class="timeline">
+<path d="M0 0 L0 100" stroke="#EB5757" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path></g>
+<path d="M0 100 C25  90 25 0 100 0" stroke="black" stroke-width="2" fill="none"></path>
+<path d="M0 100 L25  90 M25 0 L100 0" stroke="black" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path><circle cx="0" cy="100" fill="white" r="4" stroke-width="2" stroke="black"></circle><g transform="translate(25, 90)"><text font-size="70%" x="10" y="0" alignment-baseline="middle">(0.25, 0.10)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><g transform="translate(25, 0)"><text font-size="70%" x="-10" y="0" alignment-baseline="middle" text-anchor="end">(0.25, 1.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><circle cx="100" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle><g class="ball ease">
+<path d="M130 100 L 0 100" stroke="#F2994A" stroke-width="1" stroke-dasharray="1, 2"></path><circle cx="130" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g></g><g transform="translate(425, 30)"><text font-size="70%" x="50" y="-16" text-anchor="middle">ease-in</text><g class="timeline">
+<path d="M0 0 L0 100" stroke="#EB5757" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path></g>
+<path d="M0 100 C42 100 100 0 100 0" stroke="black" stroke-width="2" fill="none"></path>
+<path d="M0 100 L42 100 M100 0 L100 0" stroke="black" stroke-width="1" fill="none" stroke-dasharray="1, 
+        2"></path><circle cx="0" cy="100" fill="white" r="4" stroke-width="2" stroke="black"></circle><g transform="translate(42, 100)"><text font-size="70%" x="10" y="0" alignment-baseline="middle">(0.42, 0.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><g transform="translate(100, 0)"><text font-size="70%" x="-10" y="0" alignment-baseline="middle" text-anchor="end">(1.00, 1.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><circle cx="100" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle><g class="ball ease-in">
+<path d="M130 100 L 0 100" stroke="#F2994A" stroke-width="1" stroke-dasharray="1, 2"></path><circle cx="130" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g></g><g transform="translate(25, 225)"><text font-size="70%" x="50" y="-16" text-anchor="middle">ease-out</text><g class="timeline">
+<path d="M0 0 L0 100" stroke="#EB5757" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path></g>
+<path d="M0 100 C0 100 58 0 100 0" stroke="black" stroke-width="2" fill="none"></path>
+<path d="M0 100 L0 100 M58 0 L100 0" stroke="black" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path><circle cx="0" cy="100" fill="white" r="4" stroke-width="2" stroke="black"></circle><g transform="translate(0, 100)"><text font-size="70%" x="10" y="0" alignment-baseline="middle">(0.00, 0.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><g transform="translate(58, 0)"><text font-size="70%" x="-10" y="0" alignment-baseline="middle" text-anchor="end">(0.58, 1.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><circle cx="100" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle><g class="ball ease-out">
+<path d="M130 100 L 0 100" stroke="#F2994A" stroke-width="1" stroke-dasharray="1, 2"></path><circle cx="130" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g></g><g transform="translate(225, 225)"><text font-size="70%" x="50" y="-16" text-anchor="middle">ease-in-out</text><g class="timeline">
+<path d="M0 0 L0 100" stroke="#EB5757" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path></g>
+<path d="M0 100 C42 100 58 0 100 0" stroke="black" stroke-width="2" fill="none"></path>
+<path d="M0 100 L42 100 M58 0 L100 0" stroke="black" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path><circle cx="0" cy="100" fill="white" r="4" stroke-width="2" stroke="black"></circle><g transform="translate(42, 100)"><text font-size="70%" x="10" y="0" alignment-baseline="middle">(0.42, 0.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><g transform="translate(58, 0)"><text font-size="70%" x="-10" y="0" alignment-baseline="middle" text-anchor="end">(0.58, 1.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><circle cx="100" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle><g class="ball ease-in-out">
+<path d="M130 100 L 0 100" stroke="#F2994A" stroke-width="1" stroke-dasharray="1, 2"></path><circle cx="130" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g></g><g transform="translate(425, 225)"><text font-size="70%" x="50" y="-16" text-anchor="middle">(custom)</text><g class="timeline">
+<path d="M0 0 L0 100" stroke="#EB5757" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path></g>
+<path d="M0 100 C50 0 50 100 100 0" stroke="black" stroke-width="2" fill="none"></path>
+<path d="M0 100 L50 0 M50 100 L100 0" stroke="black" stroke-width="1" fill="none" stroke-dasharray="1, 2"></path><circle cx="0" cy="100" fill="white" r="4" stroke-width="2" stroke="black"></circle><g transform="translate(50, 0)"><text font-size="70%" x="-10" y="0" alignment-baseline="middle" text-anchor="end">(0.50, 1.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><g transform="translate(50, 100)"><text font-size="70%" x="10" y="0" alignment-baseline="middle">(0.50, 0.00)</text><circle cx="0" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle></g><circle cx="100" cy="0" fill="white" r="4" stroke-width="2" stroke="black"></circle><g class="ball custom-ease">
+<path d="M130 100 L 0 100" stroke="#F2994A" stroke-width="1" stroke-dasharray="1, 2"></path><circle cx="130" cy="100" fill="#F2994A" r="5" stroke-width="0"></circle></g></g></svg></p><p><script>
+(function() {
+    var nextVal = 0;
+    (function next() {
+        Array.prototype.forEach.call(document.querySelectorAll(".ball"),
+                                     function(ball) {
+            if (nextVal == 0) {
+                ball.classList.remove("end");
+            } else {
+                ball.classList.add("end");
+            }
+        });
+        Array.prototype.forEach.call(document.querySelectorAll(".timeline"),
+                                     function(timeline) {
+            if (nextVal == 0) {
+                timeline.classList.remove("end");
+            } else {
+                timeline.classList.add("end");
+            }
+        });
+        nextVal = nextVal == 100 ? 0 : 100;
+        setTimeout(next, 1000);
+    })();
+})();
+</script></p><p>ベジェ曲線は、曲線を描くのに役立つ美しい抽象概念です。最もよく使われる形態である3次ベジェ曲線は、曲線を描いて格納するという問題を4つの座標を格納するという問題に変えます。</p><p>効率面での利点の他に、4つの制御点を曲線形の上に移すと直感的に理解しやすくなり、直接操作エディタに適したものとなります。</p><p>点の2つは曲線の端点となっているので、多くのベジェ曲線を使ってさらに複雑な構造を正確に作り上げることが容易になります。端点が正確に指定されることは、アニメーションの場合は常に大変便利です。イージング関数では、<em><strong>t=0%</strong></em>の時は初期値、<em><strong>t=100%</strong></em>の時は最終値なのです。</p><p>少し気づきにくい利点は、<em><strong>P0</strong></em>と<em><strong>P1</strong></em>を結ぶ線が、<em><strong>P0</strong></em>から出る曲線の接線になっているということです。このため、点対称の制御点を持つ2本の接続した曲線がある場合、接続点の傾きは両側で同じになることが保証されます。</p><p><img src="http://postd.cc/wp/wp-content/uploads/2017/02/d_bezier11.jpg" alt="d_bezier11" width="693" height="365" class="alignleft size-full wp-image-9327"><br>
 <em>左：点対称の制御点を持つ2本の接続した3次ベジェ曲線。<br>
 右：制御点が点対称でない場合。</em></p><p>ベジェ曲線のような数学的概念を扱う主な利点は、自分の問題領域の他の部分では全く認識できない問題に突き当たっても、何十年にもわたる数学研究を利用すれば大抵解決できるということです。</p><p>例えば、私は本記事を書くに当たって、上掲の曲線をアニメーション化するため、指定値<em><strong>t</strong></em>でベジェ曲線を分割する方法を学ばなければなりませんでした。ですが、それに関してうまく説明されている記事「<a href="https://pomax.github.io/bezierinfo/#splitting" rel="nofollow" title="" class="ext-link">A Primer on Bézier Curves: Splitting Curves</a>」（ベジェ曲線入門：曲線を分割する）をすぐに見つけることができたのです。</p><p>また、Dudley Storeyの記事「<a href="http://thenewcode.com/744/Make-SVG-Responsive" rel="nofollow" title="" class="ext-link">Make SVG Responsive</a>」（SVGをレスポンシブに）のおかげで、本記事で使ったインラインSVGの全てについて、モバイル環境でもうまく動作するようにできました。</p>

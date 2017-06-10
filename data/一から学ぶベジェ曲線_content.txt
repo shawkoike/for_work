@@ -1,13 +1,349 @@
-Bezier Curves from the Ground Up （2016-12-29） by Jamie Wong(編注：SVGアニメーションについては元記事で動作をご確認ください。)皆さんは線分のことをどう表現しますか？　線分は、端点によって考えられるかもしれません。その端点をP0、P1と呼ぶことにしましょう。
+Bezier Curves from the Ground Up （2016-12-29） by Jamie Wong(編注：SVGアニメーションを元記事にならい追加しました。リクエストありがとうございました。)皆さんは線分のことをどう表現しますか？　線分は、端点によって考えられるかもしれません。その端点をP0、P1と呼ぶことにしましょう。
 線分を厳密に定義するならば、「P0とP1を結ぶ直線において、P0とP1の間にある全ての点の集合」と言えるかもしれません。これは以下のように表せるでしょう。
-便利なことに、上記の定義から、その線分上のどこにある点の座標でも簡単に求めることができます。例えば、中点はL(0.5)にあります。実は、2点間のどんな値でも、任意の精度で線形補間することが可能です。そのため、時間関数L(t)のtで線をたどるといった、より複雑なことができるのです。ここまで来ると、「それが曲線と何の関係があるのか？」と不思議に思うかもしれません。2つの点だけで正確に線分を描けるということは、かなり直感的に理解できそうです。では、以下の曲線を正確に描くにはどうすればよいでしょうか？このような独特な曲線も、3つの点だけで描くことができるとわかります！これは2次ベジェ曲線と呼ばれます。この複雑な帽子をかぶっているかのような曲線を得るための線分は1次ベジェ曲線と言えるかもしれません。その理由を見てみましょう。まず、P0とP1を補間すると同時にP1とP2を補間するとどんな形になるか考えてみましょう。それでは、B0,1(t)とB1,2(t)の線形補間を行ってみると…B0,1,2(t)の等式はB0,1とB1,2の等式にそっくりなことに注目してください。B0,1,2(t)のパスをたどるとどうなるか見てみましょう。先ほどの曲線になりました！2本の1次ベジェ曲線を補間すると2次ベジェ曲線が得られるのと同様に、2本の2次ベジェ曲線を補間すると3次ベジェ曲線が得られます。ここで、厄介な再帰的定義が含まれているのではないかと内心疑問が湧くかもしれません。実は、そのとおりなのです。TypeScriptで（簡潔ですが効率の悪い形で）表すと、以下のようになるでしょう。偶然にも3次ベジェ曲線は、単純さと正確さのバランスがうまく取れているので、様々な用途に役立つようです。Figmaのようなベクタ編集ツールで最もよく使われるタイプの曲線です。
+便利なことに、上記の定義から、その線分上のどこにある点の座標でも簡単に求めることができます。例えば、中点はL(0.5)にあります。実は、2点間のどんな値でも、任意の精度で線形補間することが可能です。そのため、時間関数L(t)のtで線をたどるといった、より複雑なことができるのです。
+
+P0P1L(0.5)
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    var x0 = 50;
+    var y0 = 50;
+    var x1 = 550;
+    var y1 = 150;
+    var Lg1 = document.getElementById("Lg1");
+    var Lt1 = document.getElementById("Lt1");
+    var p1 = document.getElementById("p1");
+    (function next() {
+        t += dt;
+        if (t  1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var x = x0 + t * (x1 - x0);
+        var y = y0 + t * (y1 - y0);
+        Lg1.setAttribute("transform",  "translate(" + x + "," + y + ")");
+        Lt1.innerHTML = "L(" + t.toFixed(2) + ")";
+        p1.setAttribute("d", "M50 50 L" + x.toFixed(2) + " " + y.toFixed(2));
+        requestAnimationFrame(next);
+    })();
+})();
+ここまで来ると、「それが曲線と何の関係があるのか？」と不思議に思うかもしれません。2つの点だけで正確に線分を描けるということは、かなり直感的に理解できそうです。では、以下の曲線を正確に描くにはどうすればよいでしょうか？このような独特な曲線も、3つの点だけで描くことができるとわかります！これは2次ベジェ曲線と呼ばれます。この複雑な帽子をかぶっているかのような曲線を得るための線分は1次ベジェ曲線と言えるかもしれません。その理由を見てみましょう。まず、P0とP1を補間すると同時にP1とP2を補間するとどんな形になるか考えてみましょう。
+
+
+
+P0P1P2B0,1(0.00)B1,2(0.00)
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    var x0 = 50;
+    var y0 = 50;
+    var x1 = 550;
+    var y1 = 150;
+    var x2 = 550;
+    var y2 = 50;
+    var quad1 = document.getElementById("quad1");
+    var gB01 = quad1.querySelector(".gB01");
+    var gB12 = quad1.querySelector(".gB12");
+    var t01 = quad1.querySelector(".t01");
+    var t12 = quad1.querySelector(".t12");
+    var p01 = quad1.querySelector(".p01");
+    var p12 = quad1.querySelector(".p12");
+    (function next() {
+        t += dt;
+        if (t  1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var x01 = x0 + t * (x1 - x0);
+        var y01 = y0 + t * (y1 - y0);
+        gB01.setAttribute("transform",  "translate(" + x01 + "," + y01 + ")");
+        t01.innerHTML = t.toFixed(2);
+        p01.setAttribute("d", "M" + x0 + " " + y0 + " L" + x01.toFixed(2) + " " + y01.toFixed(2));
+        var x12 = x1 + t * (x2 - x1);
+        var y12 = y1 + t * (y2 - y1);
+        gB12.setAttribute("transform",  "translate(" + x12 + "," + y12 + ")");
+        t12.innerHTML = t.toFixed(2);
+        p12.setAttribute("d", "M" + x1 + " " + y1 + " L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        requestAnimationFrame(next);
+    })();
+})();
+それでは、B0,1(t)とB1,2(t)の線形補間を行ってみると…
+
+
+
+
+
+P0P1P2B0,1,2(0.00)
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    var x0 = 50;
+    var y0 = 50;
+    var x1 = 550;
+    var y1 = 150;
+    var x2 = 550;
+    var y2 = 50;
+    var quad = document.getElementById("quad2");
+    var gB01 = quad.querySelector(".gB01");
+    var gB12 = quad.querySelector(".gB12");
+    var gB012 = quad.querySelector(".gB012");
+    var p01 = quad.querySelector(".p01");
+    var p12 = quad.querySelector(".p12");
+    var p012 = quad.querySelector(".p012");
+    var pB012 = quad.querySelector(".pB012");
+    var t012 = quad.querySelector(".t012");
+    (function next() {
+        t += dt;
+        if (t  1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var x01 = x0 + t * (x1 - x0);
+        var y01 = y0 + t * (y1 - y0);
+        gB01.setAttribute("transform",  "translate(" + x01 + "," + y01 + ")");
+        p01.setAttribute("d", "M" + x0 + " " + y0 + " L" + x01.toFixed(2) + " " + y01.toFixed(2));
+        var x12 = x1 + t * (x2 - x1);
+        var y12 = y1 + t * (y2 - y1);
+        gB12.setAttribute("transform",  "translate(" + x12 + "," + y12 + ")");
+        p12.setAttribute("d", "M" + x1 + " " + y1 + " L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        var x012 = x01 + t * (x12 - x01);
+        var y012 = y01 + t * (y12 - y01);
+        t012.innerHTML = t.toFixed(2);
+        gB012.setAttribute("transform",  "translate(" + x012 + "," + y012 + ")");
+        pB012.setAttribute("d", "M" + x01.toFixed(2) + " " + y01.toFixed(2) + " " +
+                                "L" + x012.toFixed(2) + " " + y012.toFixed(2));
+        p012.setAttribute("d", "M" + x01.toFixed(2) + " " + y01.toFixed(2) + " " +
+                               "L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        requestAnimationFrame(next);
+    })();
+})();
+B0,1,2(t)の等式はB0,1とB1,2の等式にそっくりなことに注目してください。B0,1,2(t)のパスをたどるとどうなるか見てみましょう。
+
+
+
+
+
+
+P0P1P2
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    var x0 = 50;
+    var y0 = 50;
+    var x1 = 550;
+    var y1 = 150;
+    var x2 = 550;
+    var y2 = 50;
+    var quad = document.getElementById("quad3");
+    var gB01 = quad.querySelector(".gB01");
+    var gB12 = quad.querySelector(".gB12");
+    var gB012 = quad.querySelector(".gB012");
+    var p01 = quad.querySelector(".p01");
+    var p12 = quad.querySelector(".p12");
+    var p012 = quad.querySelector(".p012");
+    var pB012 = quad.querySelector(".pB012");
+    var curve = quad.querySelector(".curve");
+    var curveLength = curve.getTotalLength();
+    curve.setAttribute("stroke-dasharray", curveLength);
+    (function next() {
+        t += dt;
+        if (t  1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var x01 = x0 + t * (x1 - x0);
+        var y01 = y0 + t * (y1 - y0);
+        gB01.setAttribute("transform",  "translate(" + x01 + "," + y01 + ")");
+        p01.setAttribute("d", "M" + x0 + " " + y0 + " L" + x01.toFixed(2) + " " + y01.toFixed(2));
+        var x12 = x1 + t * (x2 - x1);
+        var y12 = y1 + t * (y2 - y1);
+        gB12.setAttribute("transform",  "translate(" + x12 + "," + y12 + ")");
+        p12.setAttribute("d", "M" + x1 + " " + y1 + " L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        var x012 = x01 + t * (x12 - x01);
+        var y012 = y01 + t * (y12 - y01);
+        gB012.setAttribute("transform",  "translate(" + x012 + "," + y012 + 
+        ")");
+        pB012.setAttribute("d", "M" + x01.toFixed(2) + " " + y01.toFixed(2) + " " +
+                                "L" + x012.toFixed(2) + " " + y012.toFixed(2));
+        p012.setAttribute("d", "M" + x01.toFixed(2) + " " + y01.toFixed(2) + " " +
+                               "L" + x12.toFixed(2) + " " + y12.toFixed(2));
+        curve.setAttribute("d", "M" + x0 + " " + y0 + " " +
+                                "Q" + x01 + " " + y01 + " " + x012 + " " + y012);
+        requestAnimationFrame(next);
+    })();
+})();
+先ほどの曲線になりました！2本の1次ベジェ曲線を補間すると2次ベジェ曲線が得られるのと同様に、2本の2次ベジェ曲線を補間すると3次ベジェ曲線が得られます。
+
+
+
+
+P0P1P2P3
+(function() {
+    var t = 0;
+    var dt = 0.004;
+    function B(P) {
+        function _B(P, k, n, t) {
+            if (k == n) return P[n];
+            var left = _B(P, k, n-1, t);
+            var right = _B(P, k+1, n, t);
+            return [
+                (1-t) * left[0] + t * right[0],
+                (1-t) * left[1] + t * right[1]
+            ];
+        }
+        return function(t) {
+            return _B(P, 0, P.length-1, t);
+        }
+    };
+    var P = [
+        [50, 50],
+        [50, 150],
+        [550, 50],
+        [550, 150]
+    ];
+    // It's silly and pretty inefficient to this like this, but *shrug*!
+    var B0123 = B(P);
+    var B012 = B(P.slice(0, 3));
+    var B123 = B(P.slice(1, 4));
+    var B01 = B(P.slice(0, 2));
+    var B12 = B(P.slice(1, 3));
+    var B23 = B(P.slice(2, 4));
+    var cubic = document.getElementById("cubic1");
+    var p012 = cubic.querySelector(".p012");
+    var p123 = cubic.querySelector(".p123");
+    var p0123 = cubic.querySelector(".p0123");
+    var g012 = cubic.querySelector(".g012");
+    var g123 = cubic.querySelector(".g123");
+    var g0123 = cubic.querySelector(".g0123");
+    var line = cubic.querySelector(".line");
+    var lineProg = cubic.querySelector(".line-prog");
+    (function next() {
+        t += dt;
+        if (t  1) {
+            dt *= -1;
+            t = Math.min(1, Math.max(0, t));
+        }
+        var P0123 = B0123(t);
+        var P012 = B012(t);
+        var P123 = B123(t);
+        var P01 = B01(t);
+        var P12 = B12(t);
+        var P23 = B23(t);
+        g0123.setAttribute("transform", "translate(" + P0123[0] + "," + P0123[1] + ")");
+        g012.setAttribute("transform", "translate(" + P012[0] + "," + P012[1] + ")");
+        g123.setAttribute("transform", "translate(" + P123[0] + "," + P123[1] + ")");
+        p012.setAttribute("d", "M" + P[0][0] + " " + P[0][1] +
+                              " Q" + P01[0] + " " + P01[1] +
+                               " " + P012[0] + " " + P012[1]);
+        p123.setAttribute("d", "M" + P[1][0] + " " + P[1][1] +
+                              " Q" + P12[0] + " " + P12[1] +
+                               " " + P123[0] + " " + P123[1]);
+        p0123.setAttribute("d", "M" + P[0][0] + " " + P[0][1] +
+                               " C" + P01[0] + " " + P01[1] +
+                                " " + P012[0] + " " + P012[1] +
+                                " " + P0123[0] + " " + P0123[1]);
+        line.setAttribute("d", "M" + P012[0] + " " + P012[1] +
+                               " " + P123[0] + " " + P123[1]);
+        lineProg.setAttribute("d", "M" + P012[0] + " " + P012[1] +
+                                   " " + P0123[0] + " " + P0123[1]);
+        requestAnimationFrame(next);
+    })();
+})();
+ここで、厄介な再帰的定義が含まれているのではないかと内心疑問が湧くかもしれません。実は、そのとおりなのです。TypeScriptで（簡潔ですが効率の悪い形で）表すと、以下のようになるでしょう。偶然にも3次ベジェ曲線は、単純さと正確さのバランスがうまく取れているので、様々な用途に役立つようです。Figmaのようなベクタ編集ツールで最もよく使われるタイプの曲線です。
 Figmaでの3次ベジェ曲線2つの塗り潰された丸●はP0とP3、2つのひし形◇はP1とP2だと考えてください。これらは、さらに複雑な曲線ベクタを構成する基本要素です。フォントグリフは、TrueType（.ttf）フォントのベジェ曲線によって指定されます。
 3次ベジェ曲線のvector networkとして表現された、Free Serif Italicの小文字の「e」Scalable Vector Graphics（.svg）ファイルのフォーマットは、ベジェ曲線を2つの曲線プリミティブの1つとして使います。曲線プリミティブは、以下の画像の広範囲で使われています。
 SVGフォーマットの3次スプラインの虎ベジェ曲線は、空間的曲線の表現に使われるのはもちろんですが、量間の曲線的関係の表現に使われても何ら不思議はありません。例えば、xとyの関係を示すのではなく、CSSのトランジションタイミング関数は時間の割合が出力値の割合と関連しています。
+
+.linear {
+    transition: all 1s linear;
+}
+.ease {
+    transition: all 1s cubic-bezier(0.75, 0.0, 0.75, 0.9);
+}
+.ease.end {
+    transition: all 1s ease;
+}
+.ease-in {
+    transition: all 1s ease-out;
+}
+.ease-in.end {
+    transition: all 1s ease-in;
+}
+.ease-in-out {
+    transition: all 1s ease-in-out;
+}
+.ease-out {
+    transition: all 1s ease-in;
+}
+.ease-out.end {
+    transition: all 1s ease-out;
+}
+.custom-ease {
+    transition: all 1s cubic-bezier(0.5, 1, 0.5, 0);
+}
+.ball.end {
+    transform: translateY(-100px);
+}
+.timeline {
+    transition: transform 1s linear;
+}
+.timeline.end {
+    transform: translateX(100px);
+}
+
+
+
 ベジェ曲線で定義されたトランジションタイミング関数3次ベジェ曲線は、CSSでタイミング関数を表現する2つの方法のうちの1つです（もう1つはsteps()）。CSSのタイミング関数におけるcubic-bezier(x1, y1, x2, y2)の記法は、3次ベジェ曲線のP1とP2の座標を指定するものです。
 transition-timing-function: cubic-bezier(x1, y1, x2, y2)のグラフ
 Portion of CSS Property Value：CSSプロパティ値の割合
-Portion of Time：時間の割合オレンジ色のボールが動いているアニメーションを作成したいとしましょう。以下全てのグラフにおいて、赤色の線は一定速度での時間の動きを表しています。
+Portion of Time：時間の割合オレンジ色のボールが動いているアニメーションを作成したいとしましょう。以下全てのグラフにおいて、赤色の線は一定速度での時間の動きを表しています。linear
+
+(0.00, 0.00)(1.00, 1.00)
+ease
+
+
+(0.25, 0.10)(0.25, 1.00)
+ease-in
+
+
+<path d="M0 100 L42 100 M100 0 L100 0" stroke="black" stroke-width="1" fill="none" stroke-dasharray="1, 
+        2">(0.42, 0.00)(1.00, 1.00)
+ease-out
+
+
+(0.00, 0.00)(0.58, 1.00)
+ease-in-out
+
+
+(0.42, 0.00)(0.58, 1.00)
+(custom)
+
+
+(0.50, 1.00)(0.50, 0.00)
+
+(function() {
+    var nextVal = 0;
+    (function next() {
+        Array.prototype.forEach.call(document.querySelectorAll(".ball"),
+                                     function(ball) {
+            if (nextVal == 0) {
+                ball.classList.remove("end");
+            } else {
+                ball.classList.add("end");
+            }
+        });
+        Array.prototype.forEach.call(document.querySelectorAll(".timeline"),
+                                     function(timeline) {
+            if (nextVal == 0) {
+                timeline.classList.remove("end");
+            } else {
+                timeline.classList.add("end");
+            }
+        });
+        nextVal = nextVal == 100 ? 0 : 100;
+        setTimeout(next, 1000);
+    })();
+})();
 ベジェ曲線は、曲線を描くのに役立つ美しい抽象概念です。最もよく使われる形態である3次ベジェ曲線は、曲線を描いて格納するという問題を4つの座標を格納するという問題に変えます。効率面での利点の他に、4つの制御点を曲線形の上に移すと直感的に理解しやすくなり、直接操作エディタに適したものとなります。点の2つは曲線の端点となっているので、多くのベジェ曲線を使ってさらに複雑な構造を正確に作り上げることが容易になります。端点が正確に指定されることは、アニメーションの場合は常に大変便利です。イージング関数では、t=0%の時は初期値、t=100%の時は最終値なのです。少し気づきにくい利点は、P0とP1を結ぶ線が、P0から出る曲線の接線になっているということです。このため、点対称の制御点を持つ2本の接続した曲線がある場合、接続点の傾きは両側で同じになることが保証されます。
 左：点対称の制御点を持つ2本の接続した3次ベジェ曲線。
 右：制御点が点対称でない場合。ベジェ曲線のような数学的概念を扱う主な利点は、自分の問題領域の他の部分では全く認識できない問題に突き当たっても、何十年にもわたる数学研究を利用すれば大抵解決できるということです。例えば、私は本記事を書くに当たって、上掲の曲線をアニメーション化するため、指定値tでベジェ曲線を分割する方法を学ばなければなりませんでした。ですが、それに関してうまく説明されている記事「A Primer on Bézier Curves: Splitting Curves」（ベジェ曲線入門：曲線を分割する）をすぐに見つけることができたのです。また、Dudley Storeyの記事「Make SVG Responsive」（SVGをレスポンシブに）のおかげで、本記事で使ったインラインSVGの全てについて、モバイル環境でもうまく動作するようにできました。

@@ -17,7 +17,8 @@ end
 urls.each do |url|
   html = Nokogiri::HTML(open(URI.encode(url)))
   title = html.css('.block-entry-title')
-  title =  title.children
+  title =  title.children.to_s
+  if title.include?('/') then title.gsub!('/','#') end
   titles << title
   puts title
   file = File.open("./data/#{title}.txt","w+")
